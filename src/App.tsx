@@ -16,6 +16,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import LeaderForm from './components/Leader/LeaderForm';
+import ManageLeader from './components/Leader/ManageLeader';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,8 +66,18 @@ function App() {
           path="/add-leader"
           element={
             <>
-              <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Dashboard | Add Leader" />
               <LeaderForm />
+            </>
+          }
+        />
+
+        <Route
+          path="/manage-leader"
+          element={
+            <>
+              <PageTitle title="Dashboard | Manage Leader" />
+              <ManageLeader />
             </>
           }
         />
