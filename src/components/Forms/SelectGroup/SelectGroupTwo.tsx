@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { ISelectGroupProps } from '../../../types/shared';
 
-const SelectGroupTwo = ({ label, options, icon: Icon }: ISelectGroupProps) => {
+const SelectGroupTwo: FC<ISelectGroupProps> = ({
+  label,
+  options,
+  icon: Icon,
+}: ISelectGroupProps) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 

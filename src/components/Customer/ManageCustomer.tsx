@@ -3,16 +3,16 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import TableThree from '../Tables/TableThree';
 
-const ManageLeader = () => {
+const ManageCustomer = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="All Leaders" />
+      <Breadcrumb pageName="All Customer" />
 
       <div className="flex flex-col gap-10">
-        <TableThree data={tableData} />
+        <TableThree data={tableData} customerTable={true} />
       </div>
     </DefaultLayout>
   );
 };
 
-export default ManageLeader;
+export default ManageCustomer;
