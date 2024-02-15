@@ -17,6 +17,7 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import LeaderForm from './components/Leader/LeaderForm';
 import ManageLeader from './components/Leader/ManageLeader';
+import CustomerForm from './components/Customer/CustomerForm';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,6 +83,15 @@ function App() {
           }
         />
 
+        <Route
+          path="/add-customer"
+          element={
+            <>
+              <PageTitle title="Dashboard | Add Customer" />
+              <CustomerForm />
+            </>
+          }
+        />
         <Route
           path="/form"
           element={
