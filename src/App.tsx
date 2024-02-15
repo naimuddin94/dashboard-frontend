@@ -19,6 +19,7 @@ import LeaderForm from './components/Leader/LeaderForm';
 import ManageLeader from './components/Leader/ManageLeader';
 import CustomerForm from './components/Customer/CustomerForm';
 import ManageCustomer from './components/Customer/ManageCustomer';
+import AddCountry from './components/Country/AddCountry';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -99,6 +100,15 @@ function App() {
             <>
               <PageTitle title="Dashboard | Manage Customer" />
               <ManageCustomer />
+            </>
+          }
+        />
+        <Route
+          path="/add-country"
+          element={
+            <>
+              <PageTitle title="Dashboard | Add Country" />
+              <AddCountry />
             </>
           }
         />
