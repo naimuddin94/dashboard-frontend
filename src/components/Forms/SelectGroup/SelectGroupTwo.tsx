@@ -33,7 +33,7 @@ const SelectGroupTwo: FC<ISelectGroupProps> = ({
           }`}
         >
           <option value="" disabled className="text-body dark:text-bodydark">
-            Click here to Select
+            Click here to select
           </option>
           {options &&
             options.map((option) => (

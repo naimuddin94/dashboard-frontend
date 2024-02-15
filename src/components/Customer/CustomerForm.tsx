@@ -8,7 +8,7 @@ import { GiCrystalGrowth } from 'react-icons/gi';
 
 
 
-const options = [
+export const options = [
     "Habib",
     "Kalam",
     "Alam",

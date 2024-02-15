@@ -13,6 +13,8 @@ import DatePickerOne from '../../components/Forms/DatePicker/DatePickerOne';
 import DatePickerTwo from '../../components/Forms/DatePicker/DatePickerTwo';
 import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
 import MultiSelect from '../../components/Forms/MultiSelect';
+import { FaAdjust } from 'react-icons/fa';
+import { options } from '../../components/Customer/CustomerForm';
 
 const FormElements = () => {
   return (
@@ -193,7 +195,7 @@ const FormElements = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
-              <SelectGroupTwo />
+              <SelectGroupTwo icon={FaAdjust} label='Time' options={options}/>
               <MultiSelect id="multiSelect" />
             </div>
           </div>

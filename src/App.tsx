@@ -20,6 +20,8 @@ import ManageLeader from './components/Leader/ManageLeader';
 import CustomerForm from './components/Customer/CustomerForm';
 import ManageCustomer from './components/Customer/ManageCustomer';
 import AddCountry from './components/Country/AddCountry';
+import ManageCountry from './components/Country/ManageCountry';
+import AddCategory from './components/Category/AddCategory';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -113,11 +115,21 @@ function App() {
           }
         />
         <Route
-          path="/form"
+          path="/manage-country"
           element={
             <>
-              <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormElements />
+              <PageTitle title="Dashboard | Manage Country" />
+              <ManageCountry />
+            </>
+          }
+        />
+
+        <Route
+          path="/add-category"
+          element={
+            <>
+              <PageTitle title="Dashboard | Add Category" />
+              <AddCategory />
             </>
           }
         />
