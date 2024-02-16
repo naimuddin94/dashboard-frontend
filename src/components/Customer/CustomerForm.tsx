@@ -1,5 +1,4 @@
 import { FaPlus } from 'react-icons/fa';
-import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
@@ -10,6 +9,7 @@ import { FormEvent } from 'react';
 export const options = ['Habib', 'Kalam', 'Alam', 'Azad', 'Kanum'];
 
 const CustomerForm = () => {
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -50,7 +50,7 @@ const CustomerForm = () => {
     console.log(customer);
   };
   return (
-    <DefaultLayout>
+    <>
       <Breadcrumb pageName="Add Customer" />
 
       <form onSubmit={handleSubmit}>
@@ -307,7 +307,7 @@ const CustomerForm = () => {
           </div>
         </div>
       </form>
-    </DefaultLayout>
+    </>
   );
 };
 

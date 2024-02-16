@@ -1,5 +1,4 @@
 import { GiCheckMark } from 'react-icons/gi';
-import DefaultLayout from '../../layout/DefaultLayout';
 import Button from '../Utility/Button';
 import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
 import { CiTimer } from 'react-icons/ci';
@@ -28,6 +27,7 @@ const countryOptions = [
 ];
 
 const AddCategory = () => {
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -46,7 +46,7 @@ const AddCategory = () => {
     console.log(category);
   };
   return (
-    <DefaultLayout>
+    <>
       <Breadcrumb pageName="Add Category" />
       <form onSubmit={handleSubmit}>
         {/* <!-- Input Fields --> */}
@@ -111,7 +111,7 @@ const AddCategory = () => {
           </div>
         </div>
       </form>
-    </DefaultLayout>
+    </>
   );
 };
 

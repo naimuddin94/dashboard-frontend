@@ -1,5 +1,4 @@
 import { FaPlus } from 'react-icons/fa';
-import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import { FormEvent } from 'react';
@@ -40,7 +39,7 @@ const LeaderForm = () => {
 
   };
   return (
-    <DefaultLayout>
+    <>
       <Breadcrumb pageName="Add Leader" />
 
       <form onSubmit={handleSubmit}>
@@ -284,7 +283,7 @@ const LeaderForm = () => {
           </div>
         </div>
       </form>
-    </DefaultLayout>
+    </>
   );
 };
 

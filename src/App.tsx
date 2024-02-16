@@ -17,6 +17,7 @@ import AddCountry from './components/Country/AddCountry';
 import ManageCountry from './components/Country/ManageCountry';
 import AddCategory from './components/Category/AddCategory';
 import ManageCategory from './components/Category/ManageCategory';
+import SigninPage from './pages/SigninPage';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -176,6 +177,15 @@ function App() {
             <>
               <PageTitle title="Chart | Softronixs" />
               <Chart />
+            </>
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <>
+              <PageTitle title="Softronixs" />
+              <SigninPage />
             </>
           }
         />

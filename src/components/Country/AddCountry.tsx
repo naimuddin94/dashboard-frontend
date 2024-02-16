@@ -1,5 +1,4 @@
 import { FormEvent } from 'react';
-import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import { GiCheckMark } from 'react-icons/gi';
@@ -16,7 +15,7 @@ const AddCountry = () => {
     console.log(country);
   };
   return (
-    <DefaultLayout>
+    <>
       <Breadcrumb pageName="Add Country" />
       <form onSubmit={handleSubmit}>
         {/* <!-- Input Fields --> */}
@@ -55,7 +54,7 @@ const AddCountry = () => {
           </div>
         </div>
       </form>
-    </DefaultLayout>
+    </>
   );
 };
 
