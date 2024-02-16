@@ -1,4 +1,4 @@
-import { IButtonProps } from '../../types/shared';
+import { IButtonProps } from '../../types/types';
 
 const Button = ({ children, icon: Icon }: IButtonProps) => {
   return (

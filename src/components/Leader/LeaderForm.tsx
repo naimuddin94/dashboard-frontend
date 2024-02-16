@@ -38,7 +38,6 @@ const LeaderForm = () => {
       password,
     };
 
-    console.log(leader);
   };
   return (
     <DefaultLayout>
@@ -62,6 +61,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Enter first name here"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -74,6 +74,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Enter last name here"
                     className="custom-input"
+                    required
                   />
                 </div>
               </div>
@@ -96,6 +97,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Phone number with country code"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -141,6 +143,7 @@ const LeaderForm = () => {
                     name="photo"
                     type="file"
                     className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                    required
                   />
                 </div>
                 <div>
@@ -175,6 +178,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Enter country name here"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -187,6 +191,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Enter city name here"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -210,6 +215,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Enter full address here"
                     className="custom-input"
+                    required
                   />
                 </div>
               </div>
@@ -232,6 +238,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="Enter national identity number"
                     className="custom-input"
+                    required
                   />
                 </div>
               </div>
@@ -253,6 +260,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="example@mail.com"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -265,6 +273,7 @@ const LeaderForm = () => {
                     type="text"
                     placeholder="***************"
                     className="custom-input"
+                    required
                   />
                 </div>
               </div>

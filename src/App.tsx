@@ -5,16 +5,10 @@ import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Calendar from './pages/Calendar';
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
-import FormElements from './pages/Form/FormElements';
-import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
 import LeaderForm from './components/Leader/LeaderForm';
 import ManageLeader from './components/Leader/ManageLeader';
 import CustomerForm from './components/Customer/CustomerForm';
@@ -45,17 +39,8 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Softronixs" />
               <ECommerce />
-            </>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <>
-              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Calendar />
             </>
           }
         />
@@ -72,27 +57,25 @@ function App() {
           path="/add-leader"
           element={
             <>
-              <PageTitle title="Dashboard | Add Leader" />
+              <PageTitle title="Softronixs | Add Leader" />
               <LeaderForm />
             </>
           }
         />
-
         <Route
           path="/manage-leader"
           element={
             <>
-              <PageTitle title="Dashboard | Manage Leader" />
+              <PageTitle title="Softronixs | Manage Leader" />
               <ManageLeader />
             </>
           }
         />
-
         <Route
           path="/add-customer"
           element={
             <>
-              <PageTitle title="Dashboard | Add Customer" />
+              <PageTitle title="Softronixs | Add Customer" />
               <CustomerForm />
             </>
           }
@@ -101,7 +84,7 @@ function App() {
           path="/manage-customers"
           element={
             <>
-              <PageTitle title="Dashboard | Manage Customer" />
+              <PageTitle title="Softronixs | Manage Customer" />
               <ManageCustomer />
             </>
           }
@@ -110,7 +93,7 @@ function App() {
           path="/add-country"
           element={
             <>
-              <PageTitle title="Dashboard | Add Country" />
+              <PageTitle title="Softronixs | Add Country" />
               <AddCountry />
             </>
           }
@@ -119,17 +102,16 @@ function App() {
           path="/manage-country"
           element={
             <>
-              <PageTitle title="Dashboard | Manage Country" />
+              <PageTitle title="Softronixs | Manage Country" />
               <ManageCountry />
             </>
           }
         />
-
         <Route
           path="/add-category"
           element={
             <>
-              <PageTitle title="Dashboard | Add Category" />
+              <PageTitle title="Softronixs | Add Category" />
               <AddCategory />
             </>
           }
@@ -138,26 +120,8 @@ function App() {
           path="/manage-category"
           element={
             <>
-              <PageTitle title="Dashboard | Manage Category" />
+              <PageTitle title="Softronixs | Manage Category" />
               <ManageCategory />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-layout"
-          element={
-            <>
-              <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormLayout />
-            </>
-          }
-        />
-        <Route
-          path="/tables"
-          element={
-            <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Tables />
             </>
           }
         />
@@ -165,35 +129,8 @@ function App() {
           path="/settings"
           element={
             <>
-              <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Settings | Softronixs" />
               <Settings />
-            </>
-          }
-        />
-        <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Chart />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Buttons />
             </>
           }
         />
@@ -201,7 +138,7 @@ function App() {
           path="/auth/signin"
           element={
             <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signin | Softronixs" />
               <SignIn />
             </>
           }
@@ -210,8 +147,35 @@ function App() {
           path="/auth/signup"
           element={
             <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signup | Softronixs" />
               <SignUp />
+            </>
+          }
+        />
+        <Route
+          path="/webhook-settings"
+          element={
+            <>
+              <PageTitle title="Chart | Softronixs" />
+              <Chart />
+            </>
+          }
+        />
+        <Route
+          path="/leader-report"
+          element={
+            <>
+              <PageTitle title="Chart | Softronixs" />
+              <Chart />
+            </>
+          }
+        />
+        <Route
+          path="/customers-report"
+          element={
+            <>
+              <PageTitle title="Chart | Softronixs" />
+              <Chart />
             </>
           }
         />

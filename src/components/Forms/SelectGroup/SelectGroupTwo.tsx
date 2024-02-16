@@ -1,10 +1,11 @@
 import { FC, useState } from 'react';
-import { ISelectGroupProps } from '../../../types/shared';
+import { ISelectGroupProps } from '../../../types/types';
 
 const SelectGroupTwo: FC<ISelectGroupProps> = ({
   label,
   options,
   icon: Icon,
+  name,
 }: ISelectGroupProps) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -23,6 +24,7 @@ const SelectGroupTwo: FC<ISelectGroupProps> = ({
         </span>
 
         <select
+          name={name}
           value={selectedOption}
           onChange={(e) => {
             setSelectedOption(e.target.value);

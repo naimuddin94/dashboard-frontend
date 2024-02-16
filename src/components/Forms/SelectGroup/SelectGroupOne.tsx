@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const SelectGroupOne: React.FC = () => {
+const SelectGroupOne = ({ name }: { name: string }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
@@ -10,9 +10,9 @@ const SelectGroupOne: React.FC = () => {
 
   return (
     <div className="mb-4.5">
-
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
+          name={name}
           value={selectedOption}
           onChange={(e) => {
             setSelectedOption(e.target.value);
@@ -22,10 +22,10 @@ const SelectGroupOne: React.FC = () => {
             isOptionSelected ? 'text-black dark:text-white' : ''
           }`}
         >
-          <option value="USA" className="text-body dark:text-bodydark">
+          <option value="active" className="text-body dark:text-bodydark">
             Active
           </option>
-          <option value="UK" className="text-body dark:text-bodydark">
+          <option value="inactive" className="text-body dark:text-bodydark">
             Inactive
           </option>
         </select>

@@ -1,6 +1,6 @@
 import ProductOne from '../../images/product/product-01.png';
 import { FaEdit } from 'react-icons/fa';
-import { ITableThreeProps } from '../../types/shared';
+import { ITableThreeProps } from '../../types/types';
 
 const TableThree = ({ data, customerTable }: ITableThreeProps) => {
   return (
