@@ -22,6 +22,7 @@ import ManageCustomer from './components/Customer/ManageCustomer';
 import AddCountry from './components/Country/AddCountry';
 import ManageCountry from './components/Country/ManageCountry';
 import AddCategory from './components/Category/AddCategory';
+import ManageCategory from './components/Category/ManageCategory';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -130,6 +131,15 @@ function App() {
             <>
               <PageTitle title="Dashboard | Add Category" />
               <AddCategory />
+            </>
+          }
+        />
+        <Route
+          path="/manage-category"
+          element={
+            <>
+              <PageTitle title="Dashboard | Manage Category" />
+              <ManageCategory />
             </>
           }
         />
