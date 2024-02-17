@@ -8,8 +8,8 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-import auth from '../firebase/firebase.config';
 import { AuthContextProps, IAuthProviderProps } from '../types/types';
+import auth from '../firebase/firebase.config';
 
 export const AuthContext = createContext<AuthContextProps | null | any>(null);
 
@@ -20,6 +20,8 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [name, setName] = useState<string | undefined | null>('');
   const [photo, setPhoto] = useState<string | undefined | null>('');
   const [loading, setLoading] = useState(true);
+
+  console.log(user);
 
   const createUser = (email: string, password: string) => {
     setLoading(true);

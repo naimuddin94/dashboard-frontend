@@ -255,7 +255,6 @@ const SignUp: React.FC = () => {
                   </div>
                 </div>
 
-
                 <div className="mb-5">
                   <input
                     type="submit"
@@ -263,18 +262,17 @@ const SignUp: React.FC = () => {
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>
-
-                <GoogleLoginBtn/>
-
-                <div className="mt-6 text-center">
-                  <p>
-                    Already have an account?{' '}
-                    <Link to="/auth/signin" className="text-primary">
-                      Sign in
-                    </Link>
-                  </p>
-                </div>
               </form>
+              <GoogleLoginBtn />
+
+              <div className="mt-6 text-center">
+                <p>
+                  Already have an account?{' '}
+                  <Link to="/auth/signin" className="text-primary">
+                    Sign in
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>
