@@ -74,6 +74,10 @@ const router = createBrowserRouter([
         path: '/auth/signup',
         element: <SignUp />,
       },
+      {
+        path: '/webhook-settings',
+        element: <Chart/>
+      },
     ],
   },
   {
