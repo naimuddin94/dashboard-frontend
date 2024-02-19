@@ -15,11 +15,17 @@ import Settings from '../pages/Settings';
 import SignIn from '../pages/Authentication/SignIn';
 import SignUp from '../pages/Authentication/SignUp';
 import NotFound from '../pages/NotFound';
+import PrivateRoute from './PrivateRoute';
+import { axiosBase } from '../hooks/useAxiosSecure';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: (
+      <PrivateRoute>
+        <RootLayout />
+      </PrivateRoute>
+    ),
     errorElement: <NotFound />,
     children: [
       {
@@ -53,10 +59,12 @@ const router = createBrowserRouter([
       {
         path: '/manage-country',
         element: <ManageCountry />,
+        loader: () => axiosBase.get('/country'),
       },
       {
         path: '/add-category',
         element: <AddCategory />,
+        loader: () => axiosBase.get('/country'),
       },
       {
         path: '/manage-category',
@@ -76,7 +84,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/webhook-settings',
-        element: <Chart/>
+        element: <Chart />,
       },
     ],
   },

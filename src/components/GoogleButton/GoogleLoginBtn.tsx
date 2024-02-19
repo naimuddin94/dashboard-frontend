@@ -2,16 +2,18 @@ import { FirebaseError } from 'firebase/app';
 import useAuthInfo from '../../hooks/useAuthInfo';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { UserCredential } from 'firebase/auth/cordova';
 
-const GoogleLoginBtn = () => {
-  const { signInWithGoogle } = useAuthInfo();
+const GoogleLoginBtn = ({ children }: { children: string }) => {
+  const { signInWithGoogle, setPhoto } = useAuthInfo();
 
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
     signInWithGoogle()
-      .then(() => {
+      .then((result: UserCredential) => {
         navigate('/');
+        setPhoto(result?.user?.photoURL);
         toast.success('Login successfully');
       })
       .catch((err: FirebaseError) => {
@@ -60,7 +62,7 @@ const GoogleLoginBtn = () => {
           </defs>
         </svg>
       </span>
-      Sign up with Google
+      {children}
     </button>
   );
 };

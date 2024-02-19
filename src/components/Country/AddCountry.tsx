@@ -2,6 +2,8 @@ import { FormEvent } from 'react';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import { GiCheckMark } from 'react-icons/gi';
+import { axiosBase } from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
 const AddCountry = () => {
   const handleSubmit = (e: FormEvent) => {
@@ -12,7 +14,15 @@ const AddCountry = () => {
 
     const country = { name, code };
 
-    console.log(country);
+    axiosBase
+      .post('/country/create', country)
+      .then((res) => {
+        form.reset();
+        toast.success(res?.data?.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <>
@@ -31,7 +41,7 @@ const AddCountry = () => {
                 Name
               </label>
               <input
-                name='country'
+                name="country"
                 type="text"
                 placeholder="Country name"
                 className="custom-input"
@@ -42,7 +52,7 @@ const AddCountry = () => {
                 Code
               </label>
               <input
-                name='code'
+                name="code"
                 type="text"
                 placeholder="Country code"
                 className="custom-input"

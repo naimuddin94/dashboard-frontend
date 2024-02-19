@@ -7,6 +7,7 @@ const LeaderForm = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
+
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
     const phoneNumber = form.phoneNumber.value;
@@ -16,6 +17,7 @@ const LeaderForm = () => {
     const NIDCopy = form.NIDCopy.files[0];
     const country = form.country.value;
     const city = form.city.value;
+    const state = form.state.value;
     const fullAddress = form.fullAddress.value;
     const nidNumber = form.nidNumber.value;
     const email = form.email.value;
@@ -31,12 +33,12 @@ const LeaderForm = () => {
       NIDCopy,
       country,
       city,
+      state,
       fullAddress,
       nidNumber,
       email,
       password,
     };
-
   };
   return (
     <>

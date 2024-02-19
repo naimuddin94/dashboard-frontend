@@ -4,11 +4,13 @@ import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/softronixs.png';
 import DarkModeSwitcher from './DarkModeSwitcher';
+import useAuthInfo from '../../hooks/useAuthInfo';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
+  const { user } = useAuthInfo();
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -57,7 +59,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" className='w-18' />
+            <img src={LogoIcon} alt="Logo" className="w-18" />
           </Link>
         </div>
 
@@ -113,7 +115,7 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
-          <DropdownUser />
+          {user && <DropdownUser />}
           {/* <!-- User Area --> */}
         </div>
       </div>

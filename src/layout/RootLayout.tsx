@@ -5,7 +5,6 @@ import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const RootLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -38,7 +37,7 @@ const RootLayout = () => {
       </div>
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

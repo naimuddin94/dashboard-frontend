@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Package } from './package';import { User, UserCredential } from 'firebase/auth';
+import { Package } from './package';
+import { User, UserCredential } from 'firebase/auth';
 import { ReactNode } from 'react';
 export interface IService {
   _id?: string;
@@ -36,7 +37,6 @@ export interface IAuthProviderProps {
   children: ReactNode;
 }
 
-
 export interface IButtonProps {
   children: string;
   icon: FC;
@@ -54,8 +54,15 @@ export interface ITableThreeProps {
   customerTable?: boolean;
 }
 
-export interface ICountryPriceList{
+export interface ICountryPriceList {
   name: string;
   price: number;
-  status: string
+  status: string;
+}
+
+export interface ICountries {
+  _id: string;
+  created_at: Date;
+  name: string;
+  code: string;
 }

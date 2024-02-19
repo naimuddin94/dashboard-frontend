@@ -263,7 +263,7 @@ const SignUp: React.FC = () => {
                   />
                 </div>
               </form>
-              <GoogleLoginBtn />
+              <GoogleLoginBtn>Sign up with Google</GoogleLoginBtn>
 
               <div className="mt-6 text-center">
                 <p>

@@ -2,31 +2,24 @@ import { GiCheckMark } from 'react-icons/gi';
 import Button from '../Utility/Button';
 import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
 import { CiTimer } from 'react-icons/ci';
-import { options } from '../Customer/CustomerForm';
 import SelectGroupOne from '../Forms/SelectGroup/SelectGroupOne';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import { FormEvent } from 'react';
-import { ICountryPriceList } from '../../types/types';
+import { ICountries, ICountryPriceList } from '../../types/types';
+import { useLoaderData } from 'react-router-dom';
+import { axiosBase } from '../../hooks/useAxiosSecure';
 
-const countryOptions = [
-  {
-    _id: 'abc1',
-    name: 'Bangladesh',
-    code: 'BN',
-  },
-  {
-    _id: 'abc12',
-    name: 'India',
-    code: 'IN',
-  },
-  {
-    _id: 'abc123',
-    name: 'Canada',
-    code: 'CA',
-  },
+const timeOptions = [
+  '10 minutes',
+  '20 minutes',
+  '30 minutes',
+  '40 minutes',
+  '50 minutes',
+  '60 minutes',
 ];
 
 const AddCategory = () => {
+  const { data: countries = [] } = useLoaderData() as { data: ICountries[] };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -36,14 +29,18 @@ const AddCategory = () => {
 
     const countryPriceList: ICountryPriceList[] = [];
 
-    countryOptions.forEach((country) => {
-      const price = form[`${country.name}_price`].value;
+    countries.forEach((country) => {
+      const price = parseFloat(form[`${country.name}_price`].value);
       const status = form[`${country.name}_status`].value;
       countryPriceList.push({ name: country.name, price, status });
     });
 
     const category = { name, time, countryPriceList };
     console.log(category);
+    axiosBase
+      .post('/category/create', category)
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
   };
   return (
     <>
@@ -73,12 +70,12 @@ const AddCategory = () => {
                 name="time"
                 label="Time"
                 icon={CiTimer}
-                options={options}
+                options={timeOptions}
               />
             </div>
             <div>
-              {countryOptions &&
-                countryOptions.map((country) => (
+              {countries &&
+                countries.map((country) => (
                   <div key={country._id} className="flex gap-5">
                     {/* <!-- Input Fields --> */}
                     <div className="flex-1">

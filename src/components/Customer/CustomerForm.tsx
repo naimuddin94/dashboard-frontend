@@ -22,6 +22,7 @@ const CustomerForm = () => {
     const NIDCopy = form.NIDCopy.files[0];
     const country = form.country.value;
     const city = form.city.value;
+    const state = form.state.value;
     const fullAddress = form.fullAddress.value;
     const nidNumber = form.nidNumber.value;
     const email = form.email.value;
@@ -39,6 +40,7 @@ const CustomerForm = () => {
       NIDCopy,
       country,
       city,
+      state,
       fullAddress,
       nidNumber,
       email,
