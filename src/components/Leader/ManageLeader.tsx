@@ -3,13 +3,13 @@ import LeaderTable from './LeaderTable';
 import useLeaders from '../../hooks/useLeaders';
 
 const ManageLeader = () => {
-  const { leaders } = useLeaders();
+  const { leaders,refetch } = useLeaders();
   return (
     <>
       <Breadcrumb pageName="All Leaders" />
 
       <div className="flex flex-col gap-10">
-        <LeaderTable data={leaders} />
+        <LeaderTable data={leaders} refetch={refetch} />
       </div>
     </>
   );

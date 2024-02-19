@@ -1,8 +1,14 @@
 import moment from 'moment';
 import { ICategory } from '../../types/types';
 import { FaEdit } from 'react-icons/fa';
+import { axiosBase } from '../../hooks/useAxiosSecure';
 
 const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
+
+    const handleDelete = (id: string) => {
+        axiosBase.delete("/category")
+    };
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -54,7 +60,7 @@ const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
                     <p className="text-black dark:text-white">
                       {category.countryPriceList.map((country) => (
                         <h3>
-                          {`${country.country} - ${country.price} - ${country.status}`}{' '}
+                          {`${country.country} - $ ${country.price} - ${country.status}`}{' '}
                           🎉
                         </h3>
                       ))}
@@ -65,7 +71,10 @@ const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
                       <button className="hover:text-primary">
                         <FaEdit />
                       </button>
-                      <button className="hover:text-primary">
+                      <button
+                        onClick={() => handleDelete(category._id)}
+                        className="hover:text-primary"
+                      >
                         <svg
                           className="fill-current"
                           width="18"

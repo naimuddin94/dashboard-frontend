@@ -1,3 +1,4 @@
+import { ILeader } from './types';
 import { FC } from 'react';
 import { Package } from './package';
 import { User, UserCredential } from 'firebase/auth';
@@ -84,6 +85,11 @@ export interface ILeader {
   nidNumber: string;
   email: string;
   password: string;
+}
+
+export interface ILeaderTableProps {
+  data: ILeader[];
+  refetch: () => void;
 }
 
 export interface ICustomer extends ILeader {
