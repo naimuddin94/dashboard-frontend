@@ -1,10 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import Logo from '../../images/logo/softronixs.png';
 import GoogleLoginBtn from '../../components/GoogleButton/GoogleLoginBtn';
+import imageUpload from '../../lib/imageUpload';
+import useAuthInfo from '../../hooks/useAuthInfo';
+import { UserCredential, updateProfile } from 'firebase/auth';
+import { toast } from 'react-toastify';
+import { FirebaseError } from 'firebase/app';
+import { axiosBase } from '../../hooks/useAxiosSecure';
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate();
+  const { createUser, setName, setPhoto } = useAuthInfo();
+  const [submitting, setSubmitting] = useState(false);
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const form = e.target as HTMLFormElement;
+    const name = form.fullName.value;
+    const photoFile = form.photo.files[0];
+    const email = form.email.value;
+    const password = form.password.value;
+    const image = await imageUpload(photoFile);
+    const newUser = { name, image, email, password };
+    createUser(email, password)
+      .then((result: UserCredential) => {
+        // update profile
+        setName(name);
+        setPhoto(image);
+        updateProfile(result.user, {
+          displayName: name,
+          photoURL: image,
+        })
+          .then(() => {
+            axiosBase
+              .post('/users/create', newUser)
+              .then(() => {
+                toast.success('Account created successfully');
+                form.reset();
+                navigate('/');
+              })
+              .catch((err) => console.log(err.message));
+          })
+          .catch((err) => toast.error('During update profile', err.message));
+      })
+      .catch((err: FirebaseError) => {
+        const errorCode = err.code;
+        const errMessage = errorCode.replace('auth/', '');
+        toast.error(errMessage);
+      })
+      .finally(() => setSubmitting(false));
+  };
   return (
     <>
       <Breadcrumb pageName="Sign Up" />
@@ -153,16 +201,18 @@ const SignUp: React.FC = () => {
                 Sign Up to Softronixs
               </h2>
 
-              <form>
+              <form onSubmit={onSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Name
                   </label>
                   <div className="relative">
                     <input
+                      name="fullName"
                       type="text"
                       placeholder="Enter your full name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      required
                     />
 
                     <span className="absolute right-4 top-4">
@@ -190,14 +240,27 @@ const SignUp: React.FC = () => {
                 </div>
 
                 <div className="mb-4">
+                  <label className="mb-3 block text-black dark:text-white">
+                    Photo
+                  </label>
+                  <input
+                    name="photo"
+                    type="file"
+                    className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                  />
+                </div>
+
+                <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
                   </label>
                   <div className="relative">
                     <input
+                      name="email"
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      required
                     />
 
                     <span className="absolute right-4 top-4">
@@ -226,9 +289,11 @@ const SignUp: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      name="password"
                       type="password"
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      required
                     />
 
                     <span className="absolute right-4 top-4">
@@ -257,9 +322,10 @@ const SignUp: React.FC = () => {
 
                 <div className="mb-5">
                   <input
+                    disabled={submitting}
                     type="submit"
                     value="Create account"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    className="w-full cursor-pointer rounded-lg border border-primary/50 bg-primary/60 p-4 text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:brightness-50"
                   />
                 </div>
               </form>

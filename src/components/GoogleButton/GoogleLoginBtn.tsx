@@ -3,6 +3,7 @@ import useAuthInfo from '../../hooks/useAuthInfo';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { UserCredential } from 'firebase/auth/cordova';
+import { axiosBase } from '../../hooks/useAxiosSecure';
 
 const GoogleLoginBtn = ({ children }: { children: string }) => {
   const { signInWithGoogle, setPhoto } = useAuthInfo();
@@ -12,9 +13,19 @@ const GoogleLoginBtn = ({ children }: { children: string }) => {
   const handleGoogleLogin = () => {
     signInWithGoogle()
       .then((result: UserCredential) => {
-        navigate('/');
-        setPhoto(result?.user?.photoURL);
-        toast.success('Login successfully');
+        const photo = result?.user?.photoURL;
+        axiosBase
+          .post('/users/create', {
+            name: result?.user?.displayName,
+            image: photo,
+            email: result?.user?.email,
+          })
+          .then(() => {
+            navigate('/');
+            setPhoto(photo);
+            toast.success('Login successfully');
+          })
+          .catch((err) => console.log(err.message));
       })
       .catch((err: FirebaseError) => {
         const errorCode = err.code;
