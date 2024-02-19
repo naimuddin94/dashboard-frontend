@@ -1,16 +1,15 @@
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import TableTwo from '../Tables/TableTwo';
-import { ICountries } from '../../types/types';
 import useCountries from '../../hooks/useCountries';
+import CountryTable from './CountryTable';
 
 const ManageCountry = () => {
-  const { countries } = useCountries() as { countries: ICountries[] };
+  const { countries, refetch } = useCountries();
   return (
     <>
       <Breadcrumb pageName="All Country" />
 
       <div className="flex flex-col gap-10">
-        <TableTwo countries={countries} />
+        <CountryTable countries={countries} refetch={refetch} />
       </div>
     </>
   );

@@ -1,8 +1,35 @@
 import { FaEdit } from 'react-icons/fa';
-import { ICountry } from '../../types/types';
 import moment from 'moment';
+import { ICountriesTableProps } from '../../types/types';
+import Swal from 'sweetalert2';
+import { axiosBase } from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
-const TableTwo = ({ countries }: { countries: ICountry[] }) => {
+const CountryTable = ({ countries, refetch }: ICountriesTableProps) => {
+  const handleDelete = (id: string) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosBase
+          .delete(`/country/${id}`)
+          .then((res) => {
+            refetch();
+            toast.success(res?.data?.message);
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      }
+    });
+  };
+
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="py-6 px-4 md:px-6 xl:px-7.5">
@@ -54,7 +81,10 @@ const TableTwo = ({ countries }: { countries: ICountry[] }) => {
                 <button className="hover:text-primary">
                   <FaEdit />
                 </button>
-                <button className="hover:text-primary">
+                <button
+                  onClick={() => handleDelete(country._id)}
+                  className="hover:text-primary"
+                >
                   <svg
                     className="fill-current"
                     width="18"
@@ -89,4 +119,4 @@ const TableTwo = ({ countries }: { countries: ICountry[] }) => {
   );
 };
 
-export default TableTwo;
+export default CountryTable;

@@ -62,7 +62,7 @@ export interface ICountryPriceList {
   status: string;
 }
 
-export interface ICountries {
+export interface ICountry {
   _id: string;
   created_at: Date;
   name: string;
@@ -122,5 +122,10 @@ export interface ICustomerForm {
 
 export interface ICustomerTableProps {
   customers: ICustomer[];
+  refetch: () => void;
+}
+
+export interface ICountriesTableProps {
+  countries: ICountry[];
   refetch: () => void;
 }
