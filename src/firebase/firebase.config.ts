@@ -5,6 +5,8 @@ import { getAuth } from 'firebase/auth';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 interface ImportMetaEnv {
+  VITE_PUBLIC_UPLOAD_PRESET(arg0: string, VITE_PUBLIC_UPLOAD_PRESET: any): unknown;
+  VITE_PUBLIC_CLOUD_NAME: any;
   VITE_APIKEY: string;
   VITE_AUTHDOMAIN: string;
   VITE_PROJECTID: string;
