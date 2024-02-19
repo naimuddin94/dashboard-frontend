@@ -84,3 +84,9 @@ export interface ILeader {
   email: string;
   password: string;
 }
+
+export interface ICustomer extends ILeader {
+  addedBy: string;
+  status: string;
+  created_at: Date;
+}

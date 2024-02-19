@@ -5,12 +5,25 @@ import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { GiCrystalGrowth } from 'react-icons/gi';
 import { FormEvent } from 'react';
+import imageUpload from '../../lib/imageUpload';
+import { useLoaderData } from 'react-router-dom';
+import { ILeader } from '../../types/types';
+import { axiosBase } from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
 export const options = ['Habib', 'Kalam', 'Alam', 'Azad', 'Kanum'];
 
 const CustomerForm = () => {
+  const { data: leaders } = useLoaderData() as { data: ILeader[] };
 
-  const handleSubmit = (e: FormEvent) => {
+  const leadersOptions = leaders?.map((leader) => {
+    const name = leader.firstName + ' ' + leader.lastName;
+    return name;
+  });
+
+  const statusOptions = ['Active', 'Pending'];
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const firstName = form.firstName.value;
@@ -18,8 +31,8 @@ const CustomerForm = () => {
     const phoneNumber = form.phoneNumber.value;
     const whatsapp = form.whatsapp.value;
     const skype = form.skype.value;
-    const photo = form.photo.files[0];
-    const NIDCopy = form.NIDCopy.files[0];
+    const photoFile = form.photo.files[0];
+    const NIDCopyFile = form.NIDCopy.files[0];
     const country = form.country.value;
     const city = form.city.value;
     const state = form.state.value;
@@ -29,6 +42,9 @@ const CustomerForm = () => {
     const password = form.password.value;
     const addedBy = form.addedBy.value;
     const status = form.status.value;
+
+    const photo = await imageUpload(photoFile);
+    const NIDCopy = await imageUpload(NIDCopyFile);
 
     const customer = {
       firstName,
@@ -49,7 +65,15 @@ const CustomerForm = () => {
       status,
     };
 
-    console.log(customer);
+    axiosBase
+      .post('/customers/create', customer)
+      .then((response) => {
+        form.reset();
+        toast.success(response?.data?.message);
+      })
+      .catch((err) => {
+        toast.error(err?.message);
+      });
   };
   return (
     <>
@@ -73,6 +97,7 @@ const CustomerForm = () => {
                     type="text"
                     placeholder="Enter first name here"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -85,6 +110,7 @@ const CustomerForm = () => {
                     type="text"
                     placeholder="Enter last name here"
                     className="custom-input"
+                    required
                   />
                 </div>
               </div>
@@ -107,6 +133,7 @@ const CustomerForm = () => {
                     type="text"
                     placeholder="Phone number with country code"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -119,6 +146,7 @@ const CustomerForm = () => {
                     type="text"
                     placeholder="Enter whatsapp id"
                     className="custom-input"
+                    required
                   />
                 </div>
 
@@ -152,6 +180,7 @@ const CustomerForm = () => {
                     name="photo"
                     type="file"
                     className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                    required
                   />
                 </div>
                 <div>
@@ -162,6 +191,7 @@ const CustomerForm = () => {
                     name="NIDCopy"
                     type="file"
                     className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                    required
                   />
                 </div>
               </div>
@@ -293,13 +323,13 @@ const CustomerForm = () => {
               <SelectGroupTwo
                 name="addedBy"
                 label="Added By"
-                options={options}
+                options={leadersOptions}
                 icon={MdOutlineAdminPanelSettings}
               />
               <SelectGroupTwo
                 name="status"
                 label="Status"
-                options={options}
+                options={statusOptions}
                 icon={GiCrystalGrowth}
               />
             </div>

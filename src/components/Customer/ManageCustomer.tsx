@@ -1,14 +1,16 @@
-import { tableData } from '../../fakeData/data';
+import { useLoaderData } from 'react-router-dom';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import TableThree from '../Tables/TableThree';
+import { ICustomer } from '../../types/types';
+import CustomerTable from './CustomerTable';
 
 const ManageCustomer = () => {
+  const { data: customers = [] } = useLoaderData() as { data: ICustomer[] };
   return (
     <>
       <Breadcrumb pageName="All Customer" />
 
       <div className="flex flex-col gap-10">
-        <TableThree data={tableData} customerTable={true} />
+        <CustomerTable customers={customers} />
       </div>
     </>
   );

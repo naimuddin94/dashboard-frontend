@@ -44,10 +44,12 @@ const router = createBrowserRouter([
       {
         path: '/add-customer',
         element: <CustomerForm />,
+        loader: () => axiosBase.get('/leaders'),
       },
       {
         path: 'manage-customers',
         element: <ManageCustomer />,
+        loader: () => axiosBase.get('/customers'),
       },
       {
         path: '/customer-report',
