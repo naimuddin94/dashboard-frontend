@@ -4,6 +4,7 @@ import { ICountriesTableProps } from '../../types/types';
 import Swal from 'sweetalert2';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const CountryTable = ({ countries, refetch }: ICountriesTableProps) => {
   const handleDelete = (id: string) => {
@@ -78,9 +79,11 @@ const CountryTable = ({ countries, refetch }: ICountriesTableProps) => {
             </div>
             <div className="col-span-1 flex items-center">
               <div className="flex items-center space-x-3.5">
-                <button className="hover:text-primary">
-                  <FaEdit />
-                </button>
+                <Link to={`/update-country/${country._id}`}>
+                  <button className="hover:text-primary">
+                    <FaEdit />
+                  </button>
+                </Link>
                 <button
                   onClick={() => handleDelete(country._id)}
                   className="hover:text-primary"

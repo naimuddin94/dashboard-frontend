@@ -129,3 +129,7 @@ export interface ICountriesTableProps {
   countries: ICountry[];
   refetch: () => void;
 }
+
+export interface IAddCountryProps {
+  country?: ICountry;
+}

@@ -4,9 +4,13 @@ import Button from '../Utility/Button';
 import { GiCheckMark } from 'react-icons/gi';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import { IAddCountryProps } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
-const AddCountry = () => {
+const AddCountry = ({ country }: IAddCountryProps) => {
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -14,21 +18,38 @@ const AddCountry = () => {
     const name = form.country.value;
     const code = form.code.value;
 
-    const country = { name, code };
+    const newCountry = { name, code };
 
-    axiosBase
-      .post('/country/create', country)
-      .then((res) => {
-        form.reset();
-        toast.success(res?.data?.message);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    if (country) {
+      axiosBase
+        .put(`/country/update/${country._id}`, newCountry)
+        .then((response) => {
+          navigate('/manage-country');
+          form.reset();
+          toast.success(response?.data?.message);
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    } else {
+      axiosBase
+        .post('/country/create', newCountry)
+        .then((res) => {
+          form.reset();
+          toast.success(res?.data?.message);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    }
   };
+
   return (
     <>
       <Breadcrumb pageName="Add Country" />
@@ -46,6 +67,7 @@ const AddCountry = () => {
                 Name
               </label>
               <input
+                defaultValue={country ? country.name : ''}
                 name="country"
                 type="text"
                 placeholder="Country name"
@@ -57,6 +79,7 @@ const AddCountry = () => {
                 Code
               </label>
               <input
+                defaultValue={country ? country.code : ''}
                 name="code"
                 type="text"
                 placeholder="Country code"

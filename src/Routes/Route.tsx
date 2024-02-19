@@ -19,6 +19,7 @@ import PrivateRoute from './PrivateRoute';
 import { axiosBase } from '../hooks/useAxiosSecure';
 import UpdateLeader from '../pages/update/UpdateLeader';
 import UpdateCustomer from '../pages/update/UpdateCustomer';
+import UpdateCountry from '../pages/update/UpdateCountry';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,14 @@ const router = createBrowserRouter([
         path: '/manage-country',
         element: <ManageCountry />,
         loader: () => axiosBase.get('/country'),
+      },
+      {
+        path: '/update-country/:countryId',
+        element: <UpdateCountry />,
+        loader: async ({ params }) => {
+          const res = await axiosBase.get(`/country/${params.countryId}`);
+          return res.data;
+        },
       },
       {
         path: '/add-category',
