@@ -6,6 +6,7 @@ import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import { IAddCountryProps } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import { FaEdit } from 'react-icons/fa';
 
 const AddCountry = ({ country }: IAddCountryProps) => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const AddCountry = ({ country }: IAddCountryProps) => {
 
   return (
     <>
-      <Breadcrumb pageName="Add Country" />
+      <Breadcrumb pageName={country ? 'Update Country' : 'Add Country'} />
       <form onSubmit={handleSubmit}>
         {/* <!-- Input Fields --> */}
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -87,8 +88,11 @@ const AddCountry = ({ country }: IAddCountryProps) => {
               />
             </div>
             <div>
-              <Button disabled={submitting} icon={GiCheckMark}>
-                Save
+              <Button
+                disabled={submitting}
+                icon={country ? FaEdit : GiCheckMark}
+              >
+                {country ? 'Update' : 'Save'}
               </Button>
             </div>
           </div>

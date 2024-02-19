@@ -20,6 +20,7 @@ import { axiosBase } from '../hooks/useAxiosSecure';
 import UpdateLeader from '../pages/update/UpdateLeader';
 import UpdateCustomer from '../pages/update/UpdateCustomer';
 import UpdateCountry from '../pages/update/UpdateCountry';
+import UpdateCategory from '../pages/update/UpdateCategory';
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,14 @@ const router = createBrowserRouter([
         path: '/add-category',
         element: <AddCategory />,
         loader: () => axiosBase.get('/country'),
+      },
+      {
+        path: '/update-category/:categoryId',
+        element: <UpdateCategory/>,
+        loader: async ({ params }) => {
+          const res = await axiosBase.get(`/category/${params.categoryId}`);
+          return res.data;
+        },
       },
       {
         path: '/manage-category',

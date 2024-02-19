@@ -1,11 +1,33 @@
 import moment from 'moment';
-import { ICategory } from '../../types/types';
+import { ICategoryTableProps } from '../../types/types';
 import { FaEdit } from 'react-icons/fa';
 import { axiosBase } from '../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
-const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
+const CategoryTable = ({ categories, refetch }: ICategoryTableProps) => {
   const handleDelete = (id: string) => {
-    axiosBase.delete('/category');
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosBase
+          .delete(`/category/${id}`)
+          .then((res) => {
+            refetch();
+            toast.success(res?.data?.message);
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      }
+    });
   };
 
   return (

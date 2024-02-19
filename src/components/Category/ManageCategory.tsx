@@ -8,7 +8,7 @@ const ManageCategory = () => {
     <>
       <Breadcrumb pageName="All Categories" />
       <div className="flex flex-col gap-10">
-        <CategoryTable categories={categories} />
+        <CategoryTable categories={categories} refetch={refetch} />
       </div>
     </>
   );

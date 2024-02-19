@@ -99,7 +99,7 @@ const CustomerForm = ({ customer }: ICustomerForm) => {
 
   return (
     <>
-      <Breadcrumb pageName="Add Customer" />
+      <Breadcrumb pageName={customer ? 'Update Customer' : 'Add Customer'} />
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">

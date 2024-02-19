@@ -112,6 +112,11 @@ export interface ICategory {
   created_at: Date;
 }
 
+export interface ICategoryTableProps {
+  categories: ICategory[];
+  refetch: () => void;
+}
+
 export interface ILeaderForm {
   leader?: ILeader;
 }
