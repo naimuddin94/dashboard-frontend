@@ -4,17 +4,16 @@ import Button from '../Utility/Button';
 import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { GiCrystalGrowth } from 'react-icons/gi';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import imageUpload from '../../lib/imageUpload';
-import { useLoaderData } from 'react-router-dom';
-import { ILeader } from '../../types/types';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
-
-export const options = ['Habib', 'Kalam', 'Alam', 'Azad', 'Kanum'];
+import useLeaders from '../../hooks/useLeaders';
+import { ILeader } from '../../types/types';
 
 const CustomerForm = () => {
-  const { data: leaders } = useLoaderData() as { data: ILeader[] };
+  const [submitting, setSubmitting] = useState(false);
+  const { leaders } = useLeaders() as { leaders: ILeader[] };
 
   const leadersOptions = leaders?.map((leader) => {
     const name = leader.firstName + ' ' + leader.lastName;
@@ -25,6 +24,7 @@ const CustomerForm = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     const form = e.target as HTMLFormElement;
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
@@ -73,8 +73,12 @@ const CustomerForm = () => {
       })
       .catch((err) => {
         toast.error(err?.message);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
+
   return (
     <>
       <Breadcrumb pageName="Add Customer" />
@@ -335,7 +339,9 @@ const CustomerForm = () => {
             </div>
           </div>
           <div>
-            <Button icon={FaPlus}>Add Customer</Button>
+            <Button disabled={submitting} icon={FaPlus}>
+              Add Customer
+            </Button>
           </div>
         </div>
       </form>

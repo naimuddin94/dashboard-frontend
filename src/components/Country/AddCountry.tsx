@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import { GiCheckMark } from 'react-icons/gi';
@@ -6,8 +6,10 @@ import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 
 const AddCountry = () => {
+  const [submitting, setSubmitting] = useState(false);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     const form = e.target as HTMLFormElement;
     const name = form.country.value;
     const code = form.code.value;
@@ -22,6 +24,9 @@ const AddCountry = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
   return (
@@ -59,7 +64,9 @@ const AddCountry = () => {
               />
             </div>
             <div>
-              <Button icon={GiCheckMark}>Save</Button>
+              <Button disabled={submitting} icon={GiCheckMark}>
+                Save
+              </Button>
             </div>
           </div>
         </div>

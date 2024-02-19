@@ -38,6 +38,7 @@ export interface IAuthProviderProps {
 }
 
 export interface IButtonProps {
+  disabled: boolean;
   children: string;
   icon: FC;
 }
@@ -55,7 +56,7 @@ export interface ITableThreeProps {
 }
 
 export interface ICountryPriceList {
-  name: string;
+  country: string;
   price: number;
   status: string;
 }
@@ -88,5 +89,19 @@ export interface ILeader {
 export interface ICustomer extends ILeader {
   addedBy: string;
   status: string;
+  created_at: Date;
+}
+
+export interface ICountryPrice {
+  country: string;
+  price: number;
+  status: string;
+}
+
+export interface ICategory {
+  _id: string;
+  name: string;
+  time: string;
+  countryPriceList: ICountryPrice[];
   created_at: Date;
 }

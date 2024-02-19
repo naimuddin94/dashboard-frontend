@@ -4,10 +4,11 @@ import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
 import { CiTimer } from 'react-icons/ci';
 import SelectGroupOne from '../Forms/SelectGroup/SelectGroupOne';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { ICountries, ICountryPriceList } from '../../types/types';
 import { useLoaderData } from 'react-router-dom';
 import { axiosBase } from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
 const timeOptions = [
   '10 minutes',
@@ -19,10 +20,12 @@ const timeOptions = [
 ];
 
 const AddCategory = () => {
+  const [submitting, setSubmitting] = useState(false);
   const { data: countries = [] } = useLoaderData() as { data: ICountries[] };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     const form = e.target as HTMLFormElement;
     const name = form.category_name.value;
     const time = form.time.value;
@@ -32,15 +35,21 @@ const AddCategory = () => {
     countries.forEach((country) => {
       const price = parseFloat(form[`${country.name}_price`].value);
       const status = form[`${country.name}_status`].value;
-      countryPriceList.push({ name: country.name, price, status });
+      countryPriceList.push({ country: country.name, price, status });
     });
 
     const category = { name, time, countryPriceList };
     console.log(category);
     axiosBase
       .post('/category/create', category)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        form.reset();
+        toast.success(response?.data?.message);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => setSubmitting(false));
   };
   return (
     <>
@@ -103,7 +112,9 @@ const AddCategory = () => {
                 ))}
             </div>
             <div>
-              <Button icon={GiCheckMark}>Save</Button>
+              <Button disabled={submitting} icon={GiCheckMark}>
+                Save
+              </Button>
             </div>
           </div>
         </div>

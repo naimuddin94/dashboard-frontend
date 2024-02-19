@@ -1,14 +1,17 @@
 import { FaPlus } from 'react-icons/fa';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import imageUpload from '../../lib/imageUpload';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 
 const LeaderForm = () => {
+  const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     const form = e.target as HTMLFormElement;
 
     const firstName = form.firstName.value;
@@ -54,6 +57,9 @@ const LeaderForm = () => {
       })
       .catch((err) => {
         toast.error(err.message);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
   return (
@@ -298,7 +304,9 @@ const LeaderForm = () => {
             </div>
           </div>
           <div>
-            <Button icon={FaPlus}>Add Leader</Button>
+            <Button disabled={submitting} icon={FaPlus}>
+              Add Leader
+            </Button>
           </div>
         </div>
       </form>

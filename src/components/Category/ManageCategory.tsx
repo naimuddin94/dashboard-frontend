@@ -1,12 +1,14 @@
+import useCategories from '../../hooks/useCategories';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import TableOne from '../Tables/TableOne';
+import CategoryTable from './CategoryTable';
 
 const ManageCategory = () => {
+  const { categories, refetch } = useCategories();
   return (
     <>
       <Breadcrumb pageName="All Categories" />
       <div className="flex flex-col gap-10">
-        <TableOne />
+        <CategoryTable categories={categories} />
       </div>
     </>
   );
