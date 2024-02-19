@@ -1,10 +1,9 @@
-import { useLoaderData } from 'react-router-dom';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { ICustomer } from '../../types/types';
 import CustomerTable from './CustomerTable';
+import useCustomers from '../../hooks/useCustomers';
 
 const ManageCustomer = () => {
-  const { data: customers = [] } = useLoaderData() as { data: ICustomer[] };
+  const { customers } = useCustomers();
   return (
     <>
       <Breadcrumb pageName="All Customer" />

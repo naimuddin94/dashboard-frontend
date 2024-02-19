@@ -1,16 +1,15 @@
-import { useLoaderData } from 'react-router-dom';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { ILeader } from '../../types/types';
 import LeaderTable from './LeaderTable';
+import useLeaders from '../../hooks/useLeaders';
 
 const ManageLeader = () => {
-  const { data } = useLoaderData() as {data: ILeader[]};
+  const { leaders } = useLeaders();
   return (
     <>
       <Breadcrumb pageName="All Leaders" />
 
       <div className="flex flex-col gap-10">
-        <LeaderTable data={data}/>
+        <LeaderTable data={leaders} />
       </div>
     </>
   );
