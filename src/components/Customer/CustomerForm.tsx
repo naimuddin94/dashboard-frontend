@@ -10,10 +10,12 @@ import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import useLeaders from '../../hooks/useLeaders';
 import { ICustomerForm, ILeader } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerForm = ({ customer }: ICustomerForm) => {
   const [submitting, setSubmitting] = useState(false);
   const { leaders } = useLeaders() as { leaders: ILeader[] };
+  const navigate = useNavigate();
 
   const leadersOptions = leaders?.map((leader) => {
     const name = leader.firstName + ' ' + leader.lastName;
@@ -46,7 +48,7 @@ const CustomerForm = ({ customer }: ICustomerForm) => {
     const photo = await imageUpload(photoFile);
     const NIDCopy = await imageUpload(NIDCopyFile);
 
-    const customer = {
+    const newCustomer = {
       firstName,
       lastName,
       phoneNumber,
@@ -65,18 +67,34 @@ const CustomerForm = ({ customer }: ICustomerForm) => {
       status,
     };
 
-    axiosBase
-      .post('/customers/create', customer)
-      .then((response) => {
-        form.reset();
-        toast.success(response?.data?.message);
-      })
-      .catch((err) => {
-        toast.error(err?.message);
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    if (customer) {
+      axiosBase
+        .put(`/customers/update/${customer._id}`, newCustomer)
+        .then((response) => {
+          navigate('/manage-customers');
+          form.reset();
+          toast.success(response?.data?.message);
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    } else {
+      axiosBase
+        .post('/customers/create', newCustomer)
+        .then((response) => {
+          form.reset();
+          toast.success(response?.data?.message);
+        })
+        .catch((err) => {
+          toast.error(err?.message);
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    }
   };
 
   return (
