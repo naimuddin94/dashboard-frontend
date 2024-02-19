@@ -95,11 +95,10 @@ const router = createBrowserRouter([
       {
         path: '/add-category',
         element: <AddCategory />,
-        loader: () => axiosBase.get('/country'),
       },
       {
         path: '/update-category/:categoryId',
-        element: <UpdateCategory/>,
+        element: <UpdateCategory />,
         loader: async ({ params }) => {
           const res = await axiosBase.get(`/category/${params.categoryId}`);
           return res.data;

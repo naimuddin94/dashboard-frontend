@@ -138,3 +138,12 @@ export interface ICountriesTableProps {
 export interface IAddCountryProps {
   country?: ICountry;
 }
+
+export interface IAddCategoryProps {
+  category?: ICategory;
+}
+
+export interface ISelectGroupOneProps {
+  name: string;
+  defaultValue?: string;
+}

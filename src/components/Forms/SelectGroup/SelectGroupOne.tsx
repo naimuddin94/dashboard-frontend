@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { ISelectGroupOneProps } from '../../../types/types';
 
-const SelectGroupOne = ({ name }: { name: string }) => {
-  const [selectedOption, setSelectedOption] = useState<string>('');
+const SelectGroupOne = ({ name, defaultValue }: ISelectGroupOneProps) => {
+  const [selectedOption, setSelectedOption] = useState<string>(
+    defaultValue || '',
+  );
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {

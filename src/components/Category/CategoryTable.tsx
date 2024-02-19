@@ -4,6 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const CategoryTable = ({ categories, refetch }: ICategoryTableProps) => {
   const handleDelete = (id: string) => {
@@ -89,9 +90,11 @@ const CategoryTable = ({ categories, refetch }: ICategoryTableProps) => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-primary">
-                        <FaEdit />
-                      </button>
+                      <Link to={`/update-category/${category._id}`}>
+                        <button className="hover:text-primary">
+                          <FaEdit />
+                        </button>
+                      </Link>
                       <button
                         onClick={() => handleDelete(category._id)}
                         className="hover:text-primary"

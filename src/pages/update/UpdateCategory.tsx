@@ -1,12 +1,13 @@
 import { useLoaderData } from 'react-router-dom';
-import { ICountry } from '../../types/types';
+import { ICategory } from '../../types/types';
+import AddCategory from '../../components/Category/AddCategory';
 
 const UpdateCategory = () => {
-  const category = useLoaderData() as ICountry;
+  const category = useLoaderData() as ICategory;
   console.log(category);
   return (
     <div>
-      <h2>Category update</h2>
+      <AddCategory category={category} />
     </div>
   );
 };
