@@ -2,9 +2,12 @@ import { FaPlus } from 'react-icons/fa';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import { FormEvent } from 'react';
+import imageUpload from '../../lib/imageUpload';
+import { axiosBase } from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
 const LeaderForm = () => {
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
 
@@ -13,8 +16,8 @@ const LeaderForm = () => {
     const phoneNumber = form.phoneNumber.value;
     const whatsapp = form.whatsapp.value;
     const skype = form.skype.value;
-    const photo = form.photo.files[0];
-    const NIDCopy = form.NIDCopy.files[0];
+    const photoFile = form.photo.files[0];
+    const NIDCopyFile = form.NIDCopy.files[0];
     const country = form.country.value;
     const city = form.city.value;
     const state = form.state.value;
@@ -22,6 +25,9 @@ const LeaderForm = () => {
     const nidNumber = form.nidNumber.value;
     const email = form.email.value;
     const password = form.password.value;
+
+    const photo = await imageUpload(photoFile);
+    const NIDCopy = await imageUpload(NIDCopyFile);
 
     const leader = {
       firstName,
@@ -39,6 +45,16 @@ const LeaderForm = () => {
       email,
       password,
     };
+
+    axiosBase
+      .post('/leaders/create', leader)
+      .then((response) => {
+        form.reset();
+        toast.success(response?.data?.message);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
   return (
     <>
@@ -155,6 +171,7 @@ const LeaderForm = () => {
                     name="NIDCopy"
                     type="file"
                     className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                    required
                   />
                 </div>
               </div>

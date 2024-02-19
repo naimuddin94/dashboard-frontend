@@ -39,6 +39,7 @@ const router = createBrowserRouter([
       {
         path: '/manage-leader',
         element: <ManageLeader />,
+        loader: () => axiosBase.get('/leaders'),
       },
       {
         path: '/add-customer',

@@ -1,14 +1,16 @@
-import { tableData } from '../../fakeData/data';
+import { useLoaderData } from 'react-router-dom';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import TableThree from '../Tables/TableThree';
+import { ILeader } from '../../types/types';
+import LeaderTable from './LeaderTable';
 
 const ManageLeader = () => {
+  const { data } = useLoaderData() as {data: ILeader[]};
   return (
     <>
       <Breadcrumb pageName="All Leaders" />
 
       <div className="flex flex-col gap-10">
-        <TableThree data={tableData} />
+        <LeaderTable data={data}/>
       </div>
     </>
   );

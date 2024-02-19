@@ -66,3 +66,21 @@ export interface ICountries {
   name: string;
   code: string;
 }
+
+export interface ILeader {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  whatsapp: string;
+  skype: string;
+  photo: string;
+  NIDCopy: string;
+  country: string;
+  city: string;
+  state?: string;
+  fullAddress: string;
+  nidNumber: string;
+  email: string;
+  password: string;
+}
