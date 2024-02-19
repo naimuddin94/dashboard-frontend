@@ -4,10 +4,9 @@ import { FaEdit } from 'react-icons/fa';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 
 const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
-
-    const handleDelete = (id: string) => {
-        axiosBase.delete("/category")
-    };
+  const handleDelete = (id: string) => {
+    axiosBase.delete('/category');
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -25,7 +24,7 @@ const CategoryTable = ({ categories }: { categories: ICategory[] }) => {
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xl:pl-6">
                 Time
               </th>
-              <th className="min-w-[270px] py-4 px-4 font-medium text-black dark:text-white xl:pl-6">
+              <th className="min-w-[300px] py-4 px-4 font-medium text-black dark:text-white xl:pl-6">
                 Country
               </th>
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xl:pl-5">

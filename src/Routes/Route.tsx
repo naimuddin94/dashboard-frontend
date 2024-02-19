@@ -17,6 +17,7 @@ import SignUp from '../pages/Authentication/SignUp';
 import NotFound from '../pages/NotFound';
 import PrivateRoute from './PrivateRoute';
 import { axiosBase } from '../hooks/useAxiosSecure';
+import UpdateLeader from '../pages/update/UpdateLeader';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         path: '/manage-leader',
         element: <ManageLeader />,
         loader: () => axiosBase.get('/leaders'),
+      },
+      {
+        path: '/update-leader/:leaderId',
+        element: <UpdateLeader />,
+        loader: async ({ params }) => {
+          const res = await axiosBase.get(`/leaders/${params.leaderId}`);
+          return res.data;
+        },
       },
       {
         path: '/add-customer',

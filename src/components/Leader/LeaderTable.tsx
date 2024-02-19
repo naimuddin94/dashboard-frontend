@@ -3,6 +3,7 @@ import { ILeaderTableProps } from '../../types/types';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const LeaderTable = ({ data, refetch }: ILeaderTableProps) => {
   const handleDelete = (id: string) => {
@@ -77,9 +78,11 @@ const LeaderTable = ({ data, refetch }: ILeaderTableProps) => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-primary">
-                        <FaEdit />
-                      </button>
+                      <Link to={`/update-leader/${leader._id}`}>
+                        <button className="hover:text-primary">
+                          <FaEdit />
+                        </button>
+                      </Link>
                       <button
                         onClick={() => handleDelete(leader._id)}
                         className="hover:text-primary"

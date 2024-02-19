@@ -1,4 +1,3 @@
-import { ILeader } from './types';
 import { FC } from 'react';
 import { Package } from './package';
 import { User, UserCredential } from 'firebase/auth';
@@ -110,4 +109,8 @@ export interface ICategory {
   time: string;
   countryPriceList: ICountryPrice[];
   created_at: Date;
+}
+
+export interface ILeaderForm {
+  leader?: ILeader;
 }

@@ -1,12 +1,15 @@
-import { FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import { FormEvent, useState } from 'react';
 import imageUpload from '../../lib/imageUpload';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import { ILeaderForm } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
-const LeaderForm = () => {
+const LeaderForm = ({ leader }: ILeaderForm) => {
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -32,7 +35,7 @@ const LeaderForm = () => {
     const photo = await imageUpload(photoFile);
     const NIDCopy = await imageUpload(NIDCopyFile);
 
-    const leader = {
+    const newLeader = {
       firstName,
       lastName,
       phoneNumber,
@@ -49,22 +52,39 @@ const LeaderForm = () => {
       password,
     };
 
-    axiosBase
-      .post('/leaders/create', leader)
-      .then((response) => {
-        form.reset();
-        toast.success(response?.data?.message);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    if (leader) {
+      axiosBase
+        .put(`/leaders/update/${leader._id}`, newLeader)
+        .then((response) => {
+          navigate('/manage-leader');
+          form.reset();
+          toast.success(response?.data?.message);
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    } else {
+      axiosBase
+        .post('/leaders/create', newLeader)
+        .then((response) => {
+          form.reset();
+          toast.success(response?.data?.message);
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    }
   };
+
   return (
     <>
-      <Breadcrumb pageName="Add Leader" />
+      <Breadcrumb pageName={leader ? 'Update Leader' : 'Add Leader'} />
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
@@ -80,6 +100,7 @@ const LeaderForm = () => {
                     First Name
                   </label>
                   <input
+                    defaultValue={leader ? leader.firstName : ''}
                     name="firstName"
                     type="text"
                     placeholder="Enter first name here"
@@ -93,6 +114,7 @@ const LeaderForm = () => {
                     Last Name
                   </label>
                   <input
+                    defaultValue={leader ? leader.lastName : ''}
                     name="lastName"
                     type="text"
                     placeholder="Enter last name here"
@@ -116,6 +138,7 @@ const LeaderForm = () => {
                     Phone Number
                   </label>
                   <input
+                    defaultValue={leader ? leader.phoneNumber : ''}
                     name="phoneNumber"
                     type="text"
                     placeholder="Phone number with country code"
@@ -129,6 +152,7 @@ const LeaderForm = () => {
                     Whatsapp
                   </label>
                   <input
+                    defaultValue={leader ? leader.whatsapp : ''}
                     name="whatsapp"
                     type="text"
                     placeholder="Enter whatsapp id"
@@ -141,6 +165,7 @@ const LeaderForm = () => {
                     Skype
                   </label>
                   <input
+                    defaultValue={leader ? leader.skype : ''}
                     name="skype"
                     type="text"
                     placeholder="Enter skype id"
@@ -198,6 +223,7 @@ const LeaderForm = () => {
                     Country
                   </label>
                   <input
+                    defaultValue={leader ? leader.country : ''}
                     name="country"
                     type="text"
                     placeholder="Enter country name here"
@@ -211,6 +237,7 @@ const LeaderForm = () => {
                     City
                   </label>
                   <input
+                    defaultValue={leader ? leader.city : ''}
                     name="city"
                     type="text"
                     placeholder="Enter city name here"
@@ -224,6 +251,7 @@ const LeaderForm = () => {
                     State
                   </label>
                   <input
+                    defaultValue={leader ? leader.state : ''}
                     name="state"
                     type="text"
                     placeholder="Enter state here"
@@ -235,6 +263,7 @@ const LeaderForm = () => {
                     Full Address
                   </label>
                   <input
+                    defaultValue={leader ? leader.fullAddress : ''}
                     name="fullAddress"
                     type="text"
                     placeholder="Enter full address here"
@@ -258,6 +287,7 @@ const LeaderForm = () => {
                     National ID
                   </label>
                   <input
+                    defaultValue={leader ? leader.nidNumber : ''}
                     name="nidNumber"
                     type="text"
                     placeholder="Enter national identity number"
@@ -280,6 +310,7 @@ const LeaderForm = () => {
                     User Email
                   </label>
                   <input
+                    defaultValue={leader ? leader.email : ''}
                     name="email"
                     type="text"
                     placeholder="example@mail.com"
@@ -293,6 +324,7 @@ const LeaderForm = () => {
                     Password
                   </label>
                   <input
+                    defaultValue={leader ? leader.password : ''}
                     name="password"
                     type="text"
                     placeholder="***************"
@@ -304,8 +336,8 @@ const LeaderForm = () => {
             </div>
           </div>
           <div>
-            <Button disabled={submitting} icon={FaPlus}>
-              Add Leader
+            <Button disabled={submitting} icon={leader ? FaEdit : FaPlus}>
+              {leader ? 'Update Leader' : 'Add Leader'}
             </Button>
           </div>
         </div>
