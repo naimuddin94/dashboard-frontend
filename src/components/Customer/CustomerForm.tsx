@@ -1,4 +1,4 @@
-import { FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Button from '../Utility/Button';
 import SelectGroupTwo from '../Forms/SelectGroup/SelectGroupTwo';
@@ -9,9 +9,9 @@ import imageUpload from '../../lib/imageUpload';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import useLeaders from '../../hooks/useLeaders';
-import { ILeader } from '../../types/types';
+import { ICustomerForm, ILeader } from '../../types/types';
 
-const CustomerForm = () => {
+const CustomerForm = ({ customer }: ICustomerForm) => {
   const [submitting, setSubmitting] = useState(false);
   const { leaders } = useLeaders() as { leaders: ILeader[] };
 
@@ -97,6 +97,7 @@ const CustomerForm = () => {
                     First Name
                   </label>
                   <input
+                    defaultValue={customer ? customer.firstName : ''}
                     name="firstName"
                     type="text"
                     placeholder="Enter first name here"
@@ -110,6 +111,7 @@ const CustomerForm = () => {
                     Last Name
                   </label>
                   <input
+                    defaultValue={customer ? customer.lastName : ''}
                     name="lastName"
                     type="text"
                     placeholder="Enter last name here"
@@ -133,6 +135,7 @@ const CustomerForm = () => {
                     Phone Number
                   </label>
                   <input
+                    defaultValue={customer ? customer.phoneNumber : ''}
                     name="phoneNumber"
                     type="text"
                     placeholder="Phone number with country code"
@@ -146,6 +149,7 @@ const CustomerForm = () => {
                     Whatsapp
                   </label>
                   <input
+                    defaultValue={customer ? customer.whatsapp : ''}
                     name="whatsapp"
                     type="text"
                     placeholder="Enter whatsapp id"
@@ -159,6 +163,7 @@ const CustomerForm = () => {
                     Skype
                   </label>
                   <input
+                    defaultValue={customer ? customer.skype : ''}
                     name="skype"
                     type="text"
                     placeholder="Enter skype id"
@@ -216,6 +221,7 @@ const CustomerForm = () => {
                     Country
                   </label>
                   <input
+                    defaultValue={customer ? customer.country : ''}
                     name="country"
                     type="text"
                     placeholder="Enter country name here"
@@ -228,6 +234,7 @@ const CustomerForm = () => {
                     City
                   </label>
                   <input
+                    defaultValue={customer ? customer.city : ''}
                     name="city"
                     type="text"
                     placeholder="Enter city name here"
@@ -240,6 +247,7 @@ const CustomerForm = () => {
                     State
                   </label>
                   <input
+                    defaultValue={customer ? customer.state : ''}
                     name="state"
                     type="text"
                     placeholder="Enter state here"
@@ -251,6 +259,7 @@ const CustomerForm = () => {
                     Full Address
                   </label>
                   <input
+                    defaultValue={customer ? customer.fullAddress : ''}
                     name="fullAddress"
                     type="text"
                     placeholder="Enter full address here"
@@ -273,6 +282,7 @@ const CustomerForm = () => {
                     National ID
                   </label>
                   <input
+                    defaultValue={customer ? customer.nidNumber : ''}
                     name="nidNumber"
                     type="text"
                     placeholder="Enter national identity number"
@@ -294,6 +304,7 @@ const CustomerForm = () => {
                     User Email
                   </label>
                   <input
+                    defaultValue={customer ? customer.email : ''}
                     name="email"
                     type="text"
                     placeholder="example@mail.com"
@@ -306,6 +317,7 @@ const CustomerForm = () => {
                     Password
                   </label>
                   <input
+                    defaultValue={customer ? customer.password : ''}
                     name="password"
                     type="text"
                     placeholder="***************"
@@ -325,12 +337,14 @@ const CustomerForm = () => {
             </div>
             <div className="flex justify-between gap-9 p-6.5">
               <SelectGroupTwo
+                defaultOption={customer?.addedBy}
                 name="addedBy"
                 label="Added By"
                 options={leadersOptions}
                 icon={MdOutlineAdminPanelSettings}
               />
               <SelectGroupTwo
+                defaultOption={customer?.status}
                 name="status"
                 label="Status"
                 options={statusOptions}
@@ -339,8 +353,8 @@ const CustomerForm = () => {
             </div>
           </div>
           <div>
-            <Button disabled={submitting} icon={FaPlus}>
-              Add Customer
+            <Button disabled={submitting} icon={customer ? FaEdit : FaPlus}>
+              {customer ? 'Update Customer' : 'Add Customer'}
             </Button>
           </div>
         </div>

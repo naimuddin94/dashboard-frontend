@@ -3,13 +3,13 @@ import CustomerTable from './CustomerTable';
 import useCustomers from '../../hooks/useCustomers';
 
 const ManageCustomer = () => {
-  const { customers } = useCustomers();
+  const { customers, refetch } = useCustomers();
   return (
     <>
       <Breadcrumb pageName="All Customer" />
 
       <div className="flex flex-col gap-10">
-        <CustomerTable customers={customers} />
+        <CustomerTable customers={customers} refetch={refetch} />
       </div>
     </>
   );

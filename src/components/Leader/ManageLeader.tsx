@@ -3,7 +3,7 @@ import LeaderTable from './LeaderTable';
 import useLeaders from '../../hooks/useLeaders';
 
 const ManageLeader = () => {
-  const { leaders,refetch } = useLeaders();
+  const { leaders, refetch } = useLeaders();
   return (
     <>
       <Breadcrumb pageName="All Leaders" />

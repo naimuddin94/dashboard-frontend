@@ -1,8 +1,35 @@
 import { FaEdit } from 'react-icons/fa';
-import { ICustomer } from '../../types/types';
+import { ICustomerTableProps } from '../../types/types';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { axiosBase } from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
-const CustomerTable = ({ customers }: { customers: ICustomer[] }) => {
+const CustomerTable = ({ customers, refetch }: ICustomerTableProps) => {
+  const handleDelete = (id: string) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosBase
+          .delete(`/customers/${id}`)
+          .then((res) => {
+            refetch();
+            toast.success(res?.data?.message);
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      }
+    });
+  };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -72,10 +99,15 @@ const CustomerTable = ({ customers }: { customers: ICustomer[] }) => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-primary">
-                        <FaEdit />
-                      </button>
-                      <button className="hover:text-primary">
+                      <Link to={`/update-customer/${customer._id}`}>
+                        <button className="hover:text-primary">
+                          <FaEdit />
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(customer._id)}
+                        className="hover:text-primary"
+                      >
                         <svg
                           className="fill-current"
                           width="18"

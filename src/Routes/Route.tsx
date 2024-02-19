@@ -18,6 +18,7 @@ import NotFound from '../pages/NotFound';
 import PrivateRoute from './PrivateRoute';
 import { axiosBase } from '../hooks/useAxiosSecure';
 import UpdateLeader from '../pages/update/UpdateLeader';
+import UpdateCustomer from '../pages/update/UpdateCustomer';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
         path: 'manage-customers',
         element: <ManageCustomer />,
         loader: () => axiosBase.get('/customers'),
+      },
+      {
+        path: '/update-customer/:customerId',
+        element: <UpdateCustomer />,
+        loader: async ({ params }) => {
+          const res = await axiosBase.get(`/customers/${params.customerId}`);
+          return res.data;
+        },
       },
       {
         path: '/customer-report',

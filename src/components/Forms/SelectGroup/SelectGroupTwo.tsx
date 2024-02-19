@@ -1,13 +1,16 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { ISelectGroupProps } from '../../../types/types';
 
-const SelectGroupTwo: FC<ISelectGroupProps> = ({
+const SelectGroupTwo = ({
   label,
   options,
   icon: Icon,
   name,
+  defaultOption,
 }: ISelectGroupProps) => {
-  const [selectedOption, setSelectedOption] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<string>(
+    defaultOption || '',
+  );
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {

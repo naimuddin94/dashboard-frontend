@@ -48,6 +48,7 @@ export interface ISelectGroupProps {
   name: string;
   options: string[];
   icon: FC;
+  defaultOption?: string;
 }
 
 export interface ITableThreeProps {
@@ -113,4 +114,13 @@ export interface ICategory {
 
 export interface ILeaderForm {
   leader?: ILeader;
+}
+
+export interface ICustomerForm {
+  customer?: ICustomer;
+}
+
+export interface ICustomerTableProps {
+  customers: ICustomer[];
+  refetch: () => void;
 }
