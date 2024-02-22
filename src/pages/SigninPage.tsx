@@ -256,7 +256,6 @@ const SigninPage = () => {
                 />
               </div>
             </form>
-            <GoogleLoginBtn>Signin With Google</GoogleLoginBtn>
           </div>
         </div>
       </div>

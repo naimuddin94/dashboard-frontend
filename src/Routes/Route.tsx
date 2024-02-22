@@ -21,13 +21,16 @@ import UpdateLeader from '../pages/update/UpdateLeader';
 import UpdateCustomer from '../pages/update/UpdateCustomer';
 import UpdateCountry from '../pages/update/UpdateCountry';
 import UpdateCategory from '../pages/update/UpdateCategory';
+import AdminRoute from './AdminRoute';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
       <PrivateRoute>
-        <RootLayout />
+        <AdminRoute>
+          <RootLayout />
+        </AdminRoute>
       </PrivateRoute>
     ),
     errorElement: <NotFound />,

@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { AuthContextProps, IAuthProviderProps } from '../types/types';
 import auth from '../firebase/firebase.config';
+import { axiosBase } from '../hooks/useAxiosSecure';
 
 export const AuthContext = createContext<AuthContextProps | null | any>(null);
 
@@ -19,9 +20,8 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [name, setName] = useState<string | undefined | null>('');
   const [photo, setPhoto] = useState<string | undefined | null>('');
+  const [role, setRole] = useState<string | undefined | null>('basic');
   const [loading, setLoading] = useState(true);
-
-  console.log(user);
 
   const createUser = (email: string, password: string) => {
     setLoading(true);
@@ -42,6 +42,15 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     setPhoto('');
     return signOut(auth);
   };
+
+  useEffect(() => {
+    if (user) {
+      axiosBase.get(`/users/role/${user?.email}`).then((response) => {
+        const role = response.data.role;
+        setRole(role);
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -65,6 +74,8 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     setName,
     photo,
     setPhoto,
+    role,
+    setRole,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
