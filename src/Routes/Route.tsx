@@ -21,16 +21,14 @@ import UpdateLeader from '../pages/update/UpdateLeader';
 import UpdateCustomer from '../pages/update/UpdateCustomer';
 import UpdateCountry from '../pages/update/UpdateCountry';
 import UpdateCategory from '../pages/update/UpdateCategory';
-import AdminRoute from './AdminRoute';
+import ProtectRoute from './ProtectRoute';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
       <PrivateRoute>
-        <AdminRoute>
-          <RootLayout />
-        </AdminRoute>
+        <RootLayout />
       </PrivateRoute>
     ),
     errorElement: <NotFound />,
@@ -41,16 +39,28 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-leader',
-        element: <LeaderForm />,
+        element: (
+          <ProtectRoute protectedBy="admin">
+            <LeaderForm />
+          </ProtectRoute>
+        ),
       },
       {
         path: '/manage-leader',
-        element: <ManageLeader />,
+        element: (
+          <ProtectRoute protectedBy="admin">
+            <ManageLeader />
+          </ProtectRoute>
+        ),
         loader: () => axiosBase.get('/leaders'),
       },
       {
         path: '/update-leader/:leaderId',
-        element: <UpdateLeader />,
+        element: (
+          <ProtectRoute protectedBy="admin">
+            <UpdateLeader />
+          </ProtectRoute>
+        ),
         loader: async ({ params }) => {
           const res = await axiosBase.get(`/leaders/${params.leaderId}`);
           return res.data;
@@ -58,17 +68,29 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-customer',
-        element: <CustomerForm />,
+        element: (
+          <ProtectRoute protectedBy="leader">
+            <CustomerForm />
+          </ProtectRoute>
+        ),
         loader: () => axiosBase.get('/leaders'),
       },
       {
         path: 'manage-customers',
-        element: <ManageCustomer />,
+        element: (
+          <ProtectRoute protectedBy="leader">
+            <ManageCustomer />
+          </ProtectRoute>
+        ),
         loader: () => axiosBase.get('/customers'),
       },
       {
         path: '/update-customer/:customerId',
-        element: <UpdateCustomer />,
+        element: (
+          <ProtectRoute protectedBy="leader">
+            <UpdateCustomer />
+          </ProtectRoute>
+        ),
         loader: async ({ params }) => {
           const res = await axiosBase.get(`/customers/${params.customerId}`);
           return res.data;

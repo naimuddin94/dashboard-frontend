@@ -3,11 +3,12 @@ import useAuthInfo from '../hooks/useAuthInfo';
 import { ReactNode } from 'react';
 import Loader from '../common/Loader';
 
-interface IPrivateRouteProps {
+interface IProtectRouteProps {
   children: ReactNode;
+  protectedBy: 'admin' | 'customer' | 'leader';
 }
 
-const AdminRoute = ({ children }: IPrivateRouteProps) => {
+const ProtectRoute = ({ children, protectedBy }: IProtectRouteProps) => {
   const { roleLoading, loading, role } = useAuthInfo();
 
   if (loading) {
@@ -26,10 +27,10 @@ const AdminRoute = ({ children }: IPrivateRouteProps) => {
     );
   }
 
-  if (role === 'admin') {
+  if (role === protectedBy) {
     return children;
   }
-  return <Navigate to="/signin"></Navigate>;
+  return <Navigate to="/"></Navigate>;
 };
 
-export default AdminRoute;
+export default ProtectRoute;
