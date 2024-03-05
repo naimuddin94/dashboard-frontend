@@ -7,8 +7,10 @@ import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import { ILeaderForm } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import useAuthInfo from '../../hooks/useAuthInfo';
 
 const LeaderForm = ({ leader }: ILeaderForm) => {
+  const { createUser } = useAuthInfo();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
@@ -52,6 +54,12 @@ const LeaderForm = ({ leader }: ILeaderForm) => {
       password,
     };
 
+    const newUser = {
+      name: `${firstName} ${lastName}`,
+      email,
+      role: 'leader',
+    };
+
     if (leader) {
       axiosBase
         .put(`/leaders/update/${leader._id}`, newLeader)
@@ -70,8 +78,13 @@ const LeaderForm = ({ leader }: ILeaderForm) => {
       axiosBase
         .post('/leaders/create', newLeader)
         .then((response) => {
-          form.reset();
-          toast.success(response?.data?.message);
+          axiosBase
+            .post('/users/create', newUser)
+            .then(() => {
+              toast.success(response?.data?.message);
+              form.reset();
+            })
+            .catch((err) => console.log(err.message));
         })
         .catch((err) => {
           toast.error(err.message);

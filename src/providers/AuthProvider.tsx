@@ -51,6 +51,8 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
         setRole(role);
         setRoleLoading(false);
       });
+    } else {
+      setRoleLoading(false);
     }
   }, [user]);
 
