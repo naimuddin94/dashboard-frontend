@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       {
         path: '/add-leader',
         element: (
-          <ProtectRoute protectedBy="admin">
+          <ProtectRoute protectedBy={['admin']}>
             <LeaderForm />
           </ProtectRoute>
         ),
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       {
         path: '/manage-leader',
         element: (
-          <ProtectRoute protectedBy="admin">
+          <ProtectRoute protectedBy={['admin']}>
             <ManageLeader />
           </ProtectRoute>
         ),
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       {
         path: '/update-leader/:leaderId',
         element: (
-          <ProtectRoute protectedBy="admin">
+          <ProtectRoute protectedBy={['admin']}>
             <UpdateLeader />
           </ProtectRoute>
         ),
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
       {
         path: '/add-customer',
         element: (
-          <ProtectRoute protectedBy="leader">
+          <ProtectRoute protectedBy={['admin', 'leader']}>
             <CustomerForm />
           </ProtectRoute>
         ),
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
       {
         path: 'manage-customers',
         element: (
-          <ProtectRoute protectedBy="leader">
+          <ProtectRoute protectedBy={['admin', 'leader']}>
             <ManageCustomer />
           </ProtectRoute>
         ),
@@ -87,7 +87,7 @@ const router = createBrowserRouter([
       {
         path: '/update-customer/:customerId',
         element: (
-          <ProtectRoute protectedBy="leader">
+          <ProtectRoute protectedBy={['admin', 'leader']}>
             <UpdateCustomer />
           </ProtectRoute>
         ),
@@ -102,16 +102,28 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-country',
-        element: <AddCountry />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader']}>
+            <AddCountry />
+          </ProtectRoute>
+        ),
       },
       {
         path: '/manage-country',
-        element: <ManageCountry />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader']}>
+            <ManageCountry />
+          </ProtectRoute>
+        ),
         loader: () => axiosBase.get('/country'),
       },
       {
         path: '/update-country/:countryId',
-        element: <UpdateCountry />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader']}>
+            <UpdateCountry />
+          </ProtectRoute>
+        ),
         loader: async ({ params }) => {
           const res = await axiosBase.get(`/country/${params.countryId}`);
           return res.data;
@@ -119,11 +131,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-category',
-        element: <AddCategory />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader']}>
+            <AddCategory />
+          </ProtectRoute>
+        ),
       },
       {
         path: '/update-category/:categoryId',
-        element: <UpdateCategory />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader']}>
+            <UpdateCategory />
+          </ProtectRoute>
+        ),
         loader: async ({ params }) => {
           const res = await axiosBase.get(`/category/${params.categoryId}`);
           return res.data;
@@ -131,7 +151,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/manage-category',
-        element: <ManageCategory />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader']}>
+            <ManageCategory />
+          </ProtectRoute>
+        ),
       },
       {
         path: '/settings',

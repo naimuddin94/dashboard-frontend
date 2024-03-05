@@ -5,7 +5,7 @@ import Loader from '../common/Loader';
 
 interface IProtectRouteProps {
   children: ReactNode;
-  protectedBy: 'admin' | 'customer' | 'leader';
+  protectedBy: string[];
 }
 
 const ProtectRoute = ({ children, protectedBy }: IProtectRouteProps) => {
@@ -27,7 +27,7 @@ const ProtectRoute = ({ children, protectedBy }: IProtectRouteProps) => {
     );
   }
 
-  if (role === protectedBy) {
+  if (protectedBy.includes(role)) {
     return children;
   }
   return <Navigate to="/"></Navigate>;
