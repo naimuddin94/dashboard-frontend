@@ -1,7 +1,9 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import userThree from '../images/user/user-03.png';
+import useAuthInfo from '../hooks/useAuthInfo';
+import defaultUser from '../images/user/default_user.jpg';
 
 const Settings = () => {
+  const { user, photo, role } = useAuthInfo();
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -56,8 +58,8 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
-                          placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          placeholder="Enter full name"
+                          defaultValue={user?.displayName && user.displayName}
                         />
                       </div>
                     </div>
@@ -74,7 +76,7 @@ const Settings = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
-                        placeholder="+990 3343 7865"
+                        placeholder="Enter phone number"
                         defaultValue="+990 3343 7865"
                       />
                     </div>
@@ -118,8 +120,8 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
-                        placeholder="devidjond45@gmail.com"
-                        defaultValue="devidjond45@gmail.com"
+                        placeholder="example@mail.com"
+                        defaultValue={user?.email}
                       />
                     </div>
                   </div>
@@ -129,15 +131,15 @@ const Settings = () => {
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="Username"
                     >
-                      Username
+                      Role
                     </label>
                     <input
-                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white"
                       type="text"
                       name="Username"
                       id="Username"
-                      placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
+                      readOnly
+                      defaultValue={role}
                     />
                   </div>
 
@@ -217,10 +219,10 @@ const Settings = () => {
                 </h3>
               </div>
               <div className="p-7">
-                <form action="#">
+                <form action="#" onSubmit={(e) => e.preventDefault()}>
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
-                      <img src={userThree} alt="User" />
+                      <img src={photo ? photo : defaultUser} alt="User" />
                     </div>
                     <div>
                       <span className="mb-1.5 text-black dark:text-white">
