@@ -67,6 +67,12 @@ const CustomerForm = ({ customer }: ICustomerForm) => {
       status,
     };
 
+    const newUser = {
+      name: `${firstName} ${lastName}`,
+      email,
+      role: 'customer',
+    };
+
     if (customer) {
       axiosBase
         .put(`/customers/update/${customer._id}`, newCustomer)
@@ -85,8 +91,13 @@ const CustomerForm = ({ customer }: ICustomerForm) => {
       axiosBase
         .post('/customers/create', newCustomer)
         .then((response) => {
-          form.reset();
-          toast.success(response?.data?.message);
+          axiosBase
+            .post('/users/create', newUser)
+            .then(() => {
+              toast.success(response?.data?.message);
+              form.reset();
+            })
+            .catch((err) => console.log(err.message));
         })
         .catch((err) => {
           toast.error(err?.message);

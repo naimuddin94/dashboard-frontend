@@ -45,6 +45,16 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   };
 
   useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setPhoto(currentUser?.photoURL);
+      setLoading(false);
+    });
+
+    return () => unSubscribe();
+  }, []);
+
+  useEffect(() => {
     if (user) {
       axiosBase.get(`/users/role/${user?.email}`).then((response) => {
         const role = response.data.role;
@@ -54,17 +64,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     } else {
       setRoleLoading(false);
     }
-  }, [user]);
-
-  useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setPhoto(currentUser?.photoURL);
-      setLoading(false);
-    });
-
-    return () => unSubscribe();
-  }, []);
+  }, [user, setLoading]);
 
   const authInfo = {
     user,
