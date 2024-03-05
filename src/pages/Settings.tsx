@@ -3,7 +3,10 @@ import useAuthInfo from '../hooks/useAuthInfo';
 import defaultUser from '../images/user/default_user.jpg';
 
 const Settings = () => {
-  const { user, photo, role } = useAuthInfo();
+  const { user, photo, role, roleLoading } = useAuthInfo();
+
+  let capitalizedRole = role?.charAt(0).toUpperCase() + role?.slice(1);
+
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -129,18 +132,34 @@ const Settings = () => {
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="Username"
+                      htmlFor="emailAddress"
                     >
                       Role
                     </label>
-                    <input
-                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white"
-                      type="text"
-                      name="Username"
-                      id="Username"
-                      readOnly
-                      defaultValue={role}
-                    />
+                    <div className="relative">
+                      <span className="absolute left-4.5 top-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+                          />
+                        </svg>
+                      </span>
+                      <input
+                        className="w-full rounded border border-stroke bg-gray py-3 pl-12 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        readOnly
+                        defaultValue={capitalizedRole}
+                      />
+                    </div>
                   </div>
 
                   <div className="mb-5.5">
@@ -221,8 +240,11 @@ const Settings = () => {
               <div className="p-7">
                 <form action="#" onSubmit={(e) => e.preventDefault()}>
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="h-14 w-14 rounded-full">
-                      <img src={photo ? photo : defaultUser} alt="User" />
+                    <div className="h-14 w-14 rounded-full overflow-hidden">
+                      <img
+                        src={photo ? photo : defaultUser}
+                        alt="User"
+                      />
                     </div>
                     <div>
                       <span className="mb-1.5 text-black dark:text-white">
