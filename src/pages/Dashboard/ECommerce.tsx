@@ -6,8 +6,11 @@ import ChartTwo from '../../components/Charts/ChartTwo';
 import ChatCard from '../../components/Chat/ChatCard';
 import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
+import useLeaders from '../../hooks/useLeaders';
+import LeaderTable from '../../components/Leader/LeaderTable';
 
 const ECommerce: React.FC = () => {
+  const { leaders, refetch } = useLeaders();
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -103,7 +106,7 @@ const ECommerce: React.FC = () => {
         <ChartThree />
         <MapOne />
         <div className="col-span-12 xl:col-span-8">
-          <TableOne />
+          <LeaderTable data={leaders} refetch={refetch} />
         </div>
         <ChatCard />
       </div>
