@@ -8,9 +8,17 @@ interface IPrivateRouteProps {
 }
 
 const AdminRoute = ({ children }: IPrivateRouteProps) => {
-  const { user, loading, role } = useAuthInfo();
+  const { roleLoading, loading, role } = useAuthInfo();
 
   if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (roleLoading) {
     return (
       <div className="flex justify-center items-center h-screen w-screen">
         <Loader />

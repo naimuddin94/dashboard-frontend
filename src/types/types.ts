@@ -22,6 +22,7 @@ export interface IServiceProps {
 export interface AuthContextProps {
   user: User | null;
   loading: boolean;
+  roleLoading: boolean;
   createUser: (email: string, password: string) => Promise<UserCredential>;
   loginUser: (email: string, password: string) => Promise<UserCredential>;
   signInWithGoogle: () => Promise<UserCredential>;
