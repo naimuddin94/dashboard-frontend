@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import Logo from '../../images/logo/softronixs.png';
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
   return (
     <>
       <Breadcrumb pageName="Sign In" />
