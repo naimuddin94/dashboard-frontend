@@ -22,6 +22,7 @@ import UpdateCustomer from '../pages/update/UpdateCustomer';
 import UpdateCountry from '../pages/update/UpdateCountry';
 import UpdateCategory from '../pages/update/UpdateCategory';
 import ProtectRoute from './ProtectRoute';
+import PublicRoute from './PublicRoute';
 
 const router = createBrowserRouter([
   {
@@ -177,7 +178,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/signin',
-    element: <SigninPage />,
+    element: (
+      <PublicRoute>
+        <SigninPage />
+      </PublicRoute>
+    ),
   },
 ]);
 

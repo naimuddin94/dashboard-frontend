@@ -4,10 +4,9 @@ import useAuthInfo from '../hooks/useAuthInfo';
 import { FormEvent } from 'react';
 import { toast } from 'react-toastify';
 import { FirebaseError } from 'firebase/app';
-import Loader from '../common/Loader';
 
 const SigninPage = () => {
-  const { loginUser, loading, setLoading, user } = useAuthInfo();
+  const { loginUser, loading, setLoading } = useAuthInfo();
   const navigate = useNavigate();
 
   const onSubmit = async (e: FormEvent) => {
@@ -29,14 +28,6 @@ const SigninPage = () => {
       })
       .finally(() => setLoading(false));
   };
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (user) {
-    return navigate('/');
-  }
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

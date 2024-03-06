@@ -3,7 +3,7 @@ import useAuthInfo from '../hooks/useAuthInfo';
 import defaultUser from '../images/user/default_user.jpg';
 
 const Settings = () => {
-  const { user, photo, role, roleLoading } = useAuthInfo();
+  const { user, photo, role } = useAuthInfo();
 
   let capitalizedRole = role?.charAt(0).toUpperCase() + role?.slice(1);
 

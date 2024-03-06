@@ -3,11 +3,11 @@ import useAuthInfo from '../hooks/useAuthInfo';
 import { ReactNode } from 'react';
 import Loader from '../common/Loader';
 
-interface IPrivateRouteProps {
+interface IPublicRouteProps {
   children: ReactNode;
 }
 
-const PrivateRoute = ({ children }: IPrivateRouteProps) => {
+const PublicRoute = ({ children }: IPublicRouteProps) => {
   const { roleLoading, user, loading } = useAuthInfo();
 
   if (loading) {
@@ -27,10 +27,10 @@ const PrivateRoute = ({ children }: IPrivateRouteProps) => {
   }
 
   if (user) {
-    return children;
+    return <Navigate to="/"></Navigate>;
   }
-  
-  return <Navigate to="/signin"></Navigate>;
+
+  return children;
 };
 
-export default PrivateRoute;
+export default PublicRoute;

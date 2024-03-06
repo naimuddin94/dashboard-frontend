@@ -20,7 +20,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [name, setName] = useState<string | undefined | null>('');
   const [photo, setPhoto] = useState<string | undefined | null>('');
-  const [role, setRole] = useState<string | undefined | null>('basic');
+  const [role, setRole] = useState<string | undefined | null>('');
   const [loading, setLoading] = useState(true);
   const [roleLoading, setRoleLoading] = useState(true);
 
