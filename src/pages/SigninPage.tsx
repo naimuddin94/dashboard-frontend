@@ -16,7 +16,7 @@ const SigninPage = () => {
     const password = form.password.value;
     loginUser(email, password)
       .then(() => {
-        navigate('/');
+        navigate('/dashboard');
         toast.success('Login successfully');
         form.reset();
       })

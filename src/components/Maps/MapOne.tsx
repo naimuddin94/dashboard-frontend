@@ -34,7 +34,7 @@ const MapOne = () => {
         regions: {
           render(code: string) {
             return code.split('-')[1];
-          },
+        },
         },
       },
     });
