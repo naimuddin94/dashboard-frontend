@@ -13,7 +13,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const { role, roleLoading } = useAuthInfo();
+  const { role } = useAuthInfo();
   const location = useLocation();
   const { pathname } = location;
 
@@ -218,17 +218,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 Manage Leader
                               </NavLink>
                             </li>
-                            <li>
-                              <NavLink
-                                to="/leader-report"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Leader Report
-                              </NavLink>
-                            </li>
                           </ul>
                         </div>
                         {/* <!-- Dropdown Menu End --> */}
@@ -327,17 +316,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                   }
                                 >
                                   Manage Customer
-                                </NavLink>
-                              </li>
-                              <li>
-                                <NavLink
-                                  to="/customers-report"
-                                  className={({ isActive }) =>
-                                    'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                    (isActive && '!text-white')
-                                  }
-                                >
-                                  Customer Report
                                 </NavLink>
                               </li>
                             </ul>
