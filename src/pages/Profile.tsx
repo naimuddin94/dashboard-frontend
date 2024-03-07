@@ -1,5 +1,5 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import {  FaPhoneAlt, FaSkype } from 'react-icons/fa';
+import { FaPhoneAlt, FaSkype } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 import { RiWhatsappFill } from 'react-icons/ri';
 import useAuthInfo from '../hooks/useAuthInfo';
@@ -8,16 +8,26 @@ import defaultUser from '../images/user/default_user.jpg';
 import { useEffect, useState } from 'react';
 import { axiosBase } from '../hooks/useAxiosSecure';
 import { ICustomer } from '../types/types';
+import { useParams } from 'react-router-dom';
 
 const Profile = () => {
-  const { user, photo, role } = useAuthInfo();
+  const [roleFromBackend, setRoleFromBackend] = useState();
+  const params = useParams();
+
+  useEffect(() => {
+    axiosBase
+      .get(`/users/${params.email}`)
+      .then((res) => setRoleFromBackend(res.data.role));
+  }, [params.email]);
+
+  const { user } = useAuthInfo();
   const [userInfo, setUserInfo] = useState<ICustomer | null>(null);
 
   useEffect(() => {
     axiosBase
-      .get(`/${role}s/${user?.email}`)
+      .get(`/${roleFromBackend}s/${params.email}`)
       .then((res) => setUserInfo(res.data as ICustomer));
-  }, [user, role]);
+  }, [user, roleFromBackend]);
 
   return (
     <div>
@@ -66,8 +76,8 @@ const Profile = () => {
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3 overflow-hidden">
             <div className="relative drop-shadow-2 w-full h-full">
-              <img
-                src={user?.photoURL ? user.photoURL : defaultUser}
+                <img
+                src={userInfo ? userInfo.photo : defaultUser}
                 alt="profile"
                 className="object-cover w-full h-full scale-125"
               />
@@ -109,7 +119,7 @@ const Profile = () => {
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               {`${userInfo?.firstName} ${userInfo?.lastName}`}
             </h3>
-            <p className="font-medium">{role}</p>
+            <p className="font-medium">{roleFromBackend}</p>
             <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
               <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                 <span className="font-semibold text-black dark:text-white">

@@ -24,6 +24,7 @@ import UpdateCategory from '../pages/update/UpdateCategory';
 import ProtectRoute from './ProtectRoute';
 import PublicRoute from './PublicRoute';
 import Profile from '../pages/Profile';
+import ViewProfile from '../pages/ViewProfile';
 
 const router = createBrowserRouter([
   {
@@ -182,6 +183,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
+      },
+      {
+        path: '/view-profile/:email',
+        element: <ViewProfile />,
       },
     ],
   },

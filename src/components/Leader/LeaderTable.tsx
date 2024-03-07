@@ -1,4 +1,5 @@
 import { FaEdit } from 'react-icons/fa';
+import { LuView } from 'react-icons/lu';
 import { ILeaderTableProps } from '../../types/types';
 import { axiosBase } from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
@@ -126,6 +127,11 @@ const LeaderTable = ({ data, refetch }: ILeaderTableProps) => {
                             />
                           </svg>
                         </button>
+                        <Link to={`/view-profile/${leader.email}`}>
+                          <button className="hover:text-primary">
+                            <LuView />
+                          </button>
+                        </Link>
                       </div>
                     </td>
                   )}
