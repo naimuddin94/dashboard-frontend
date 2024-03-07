@@ -99,7 +99,7 @@ const CustomerTable = ({ customers, refetch }: ICustomerTableProps) => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <Link to={`/update-customer/${customer._id}`}>
+                      <Link to={`/update-customer/${customer.email}`}>
                         <button className="hover:text-primary">
                           <FaEdit />
                         </button>

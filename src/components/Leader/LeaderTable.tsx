@@ -91,7 +91,7 @@ const LeaderTable = ({ data, refetch }: ILeaderTableProps) => {
                   {location?.pathname === '/manage-leader' && (
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <div className="flex items-center space-x-3.5">
-                        <Link to={`/update-leader/${leader._id}`}>
+                        <Link to={`/update-leader/${leader.email}`}>
                           <button className="hover:text-primary">
                             <FaEdit />
                           </button>

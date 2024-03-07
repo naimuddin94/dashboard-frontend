@@ -86,6 +86,7 @@ export interface ILeader {
   nidNumber: string;
   email: string;
   password: string;
+  bio?: string;
 }
 
 export interface ILeaderTableProps {

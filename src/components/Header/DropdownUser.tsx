@@ -56,7 +56,7 @@ const DropdownUser = () => {
           <img
             src={user.photoURL ? photo : UserOne}
             alt="User"
-            className="rounded-full"
+            className="h-12 w-12 rounded-full"
           />
         </span>
 
@@ -135,7 +135,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <Link
-              to="/pages/settings"
+              to="/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg

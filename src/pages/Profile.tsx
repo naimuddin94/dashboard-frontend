@@ -1,12 +1,15 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../layout/DefaultLayout';
+import useAuthInfo from '../hooks/useAuthInfo';
 import CoverOne from '../images/cover/cover-01.png';
 import userSix from '../images/user/user-06.png';
 import { Link } from 'react-router-dom';
+import defaultUser from '../images/user/default_user.jpg';
 
 const Profile = () => {
+  const { user } = useAuthInfo();
+
   return (
-    <DefaultLayout>
+    <div>
       <Breadcrumb pageName="Profile" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -50,9 +53,13 @@ const Profile = () => {
           </div>
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
-          <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-            <div className="relative drop-shadow-2">
-              <img src={userSix} alt="profile" />
+          <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3 overflow-hidden">
+            <div className="relative drop-shadow-2 w-full h-full">
+              <img
+                src={user?.photoURL ? user.photoURL : defaultUser}
+                alt="profile"
+                className="object-cover w-full h-full scale-125"
+              />
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -281,7 +288,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
 

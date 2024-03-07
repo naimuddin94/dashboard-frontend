@@ -1,11 +1,23 @@
+import { useEffect, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import useAuthInfo from '../hooks/useAuthInfo';
 import defaultUser from '../images/user/default_user.jpg';
+import { axiosBase } from '../hooks/useAxiosSecure';
+import { ICustomer } from '../types/types';
+import { FaPhone } from 'react-icons/fa6';
+
 
 const Settings = () => {
   const { user, photo, role } = useAuthInfo();
+  const [userInfo, setUserInfo] = useState<ICustomer | null>(null);
 
   let capitalizedRole = role?.charAt(0).toUpperCase() + role?.slice(1);
+
+  useEffect(() => {
+    axiosBase
+      .get(`/${role}s/${user?.email}`)
+      .then((res) => setUserInfo(res.data as ICustomer));
+  }, [user, role]);
 
   return (
     <>
@@ -28,7 +40,7 @@ const Settings = () => {
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="fullName"
                       >
-                        Full Name
+                        First Name
                       </label>
                       <div className="relative">
                         <span className="absolute left-4.5 top-4">
@@ -59,10 +71,10 @@ const Settings = () => {
                         <input
                           className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                           type="text"
-                          name="fullName"
+                          name="firstName"
                           id="fullName"
                           placeholder="Enter full name"
-                          defaultValue={user?.displayName && user.displayName}
+                          defaultValue={userInfo ? userInfo.firstName : ''}
                         />
                       </div>
                     </div>
@@ -72,15 +84,37 @@ const Settings = () => {
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="phoneNumber"
                       >
-                        Phone Number
+                        Last Name
                       </label>
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="text"
-                        name="phoneNumber"
+                        name="lastName"
                         id="phoneNumber"
                         placeholder="Enter phone number"
-                        defaultValue="+990 3343 7865"
+                        defaultValue={userInfo ? userInfo.lastName : ''}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                      htmlFor="emailAddress"
+                    >
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-4.5 top-4">
+                        <FaPhone/>
+                      </span>
+                      <input
+                        className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="email"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                        placeholder="880190000000"
+                        defaultValue={userInfo ? userInfo.phoneNumber : ''}
                       />
                     </div>
                   </div>
@@ -121,9 +155,9 @@ const Settings = () => {
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="email"
-                        name="emailAddress"
                         id="emailAddress"
                         placeholder="example@mail.com"
+                        readOnly
                         defaultValue={user?.email}
                       />
                     </div>
@@ -207,7 +241,7 @@ const Settings = () => {
                         id="bio"
                         rows={6}
                         placeholder="Write your bio here"
-                        defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet."
+                        defaultValue={userInfo ? userInfo.bio : ''}
                       ></textarea>
                     </div>
                   </div>
@@ -241,10 +275,7 @@ const Settings = () => {
                 <form action="#" onSubmit={(e) => e.preventDefault()}>
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full overflow-hidden">
-                      <img
-                        src={photo ? photo : defaultUser}
-                        alt="User"
-                      />
+                      <img src={photo ? photo : defaultUser} alt="User" />
                     </div>
                     <div>
                       <span className="mb-1.5 text-black dark:text-white">

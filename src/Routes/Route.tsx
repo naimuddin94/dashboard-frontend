@@ -23,6 +23,7 @@ import UpdateCountry from '../pages/update/UpdateCountry';
 import UpdateCategory from '../pages/update/UpdateCategory';
 import ProtectRoute from './ProtectRoute';
 import PublicRoute from './PublicRoute';
+import Profile from '../pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard',
-        element: <ECommerce />,
+        element: (
+          <ProtectRoute protectedBy={['admin', 'leader', 'customer']}>
+            <ECommerce />
+          </ProtectRoute>
+        ),
       },
       {
         path: '/add-leader',
@@ -56,14 +61,14 @@ const router = createBrowserRouter([
         loader: () => axiosBase.get('/leaders'),
       },
       {
-        path: '/update-leader/:leaderId',
+        path: '/update-leader/:email',
         element: (
           <ProtectRoute protectedBy={['admin']}>
             <UpdateLeader />
           </ProtectRoute>
         ),
         loader: async ({ params }) => {
-          const res = await axiosBase.get(`/leaders/${params.leaderId}`);
+          const res = await axiosBase.get(`/leaders/${params.email}`);
           return res.data;
         },
       },
@@ -86,14 +91,14 @@ const router = createBrowserRouter([
         loader: () => axiosBase.get('/customers'),
       },
       {
-        path: '/update-customer/:customerId',
+        path: '/update-customer/:email',
         element: (
           <ProtectRoute protectedBy={['admin', 'leader']}>
             <UpdateCustomer />
           </ProtectRoute>
         ),
         loader: async ({ params }) => {
-          const res = await axiosBase.get(`/customers/${params.customerId}`);
+          const res = await axiosBase.get(`/customers/${params.email}`);
           return res.data;
         },
       },
@@ -173,6 +178,10 @@ const router = createBrowserRouter([
       {
         path: '/webhook-settings',
         element: <Chart />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
     ],
   },
