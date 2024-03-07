@@ -7,25 +7,51 @@ import useAuthInfo from '../hooks/useAuthInfo';
 import defaultUser from '../images/user/default_user.jpg';
 import { axiosBase } from '../hooks/useAxiosSecure';
 import { ICustomer, IUpdateUserInfoInput } from '../types/types';
-
 import { SubmitHandler, useForm } from 'react-hook-form';
+import Loader from '../common/Loader';
+import { updateProfile } from 'firebase/auth';
+import auth from '../firebase/firebase.config';
+import { toast } from 'react-toastify';
 
 const Settings = () => {
-  const { register, handleSubmit } = useForm<IUpdateUserInfoInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<IUpdateUserInfoInput>();
   const { user, photo, role } = useAuthInfo();
   const [userInfo, setUserInfo] = useState<ICustomer | null>(null);
 
   useEffect(() => {
-    axiosBase
-      .get(`/${role}s/${user?.email}`)
-      .then((res) => setUserInfo(res.data as ICustomer));
+    if (role && user) {
+      axiosBase
+        .get(`/${role}s/${user?.email}`)
+        .then((res) => setUserInfo(res.data as ICustomer));
+    }
   }, [user, role]);
 
   let capitalizedRole = role?.charAt(0).toUpperCase() + role?.slice(1);
 
   const onSubmit: SubmitHandler<IUpdateUserInfoInput> = (data) => {
-    console.log(data);
+    const { userId, ...updateData } = data;
+    const displayName = updateData.firstName + ' ' + updateData.lastName;
+
+    axiosBase.put(`/${role}s/update/${userId}`, updateData).then((res) => {
+      if (res.status === 200 && auth.currentUser) {
+        updateProfile(auth.currentUser, { displayName })
+          .then(() => {
+            toast.success('Updated profile successfully');
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
+      }
+    });
   };
+
+  if (!userInfo) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -42,6 +68,11 @@ const Settings = () => {
               </div>
               <div className="p-7">
                 <form onSubmit={handleSubmit(onSubmit)}>
+                  <input
+                    type="hidden"
+                    value={userInfo._id}
+                    {...register('userId')}
+                  />
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                     {/* first name field */}
                     <div className="w-full sm:w-1/2">
@@ -308,10 +339,11 @@ const Settings = () => {
 
                   <div className="flex justify-end gap-4.5">
                     <button
-                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
+                      disabled={isSubmitting}
+                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90 disabled:cursor-none"
                       type="submit"
                     >
-                      Save
+                      {isSubmitting ? 'Submitting...' : 'Save'}
                     </button>
                   </div>
                 </form>

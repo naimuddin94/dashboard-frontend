@@ -27,7 +27,7 @@ const PublicRoute = ({ children }: IPublicRouteProps) => {
   }
 
   if (user) {
-    return <Navigate to="/dashboard"></Navigate>;
+    return <Navigate to="/"></Navigate>;
   }
 
   return children;

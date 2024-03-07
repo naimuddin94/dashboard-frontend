@@ -151,6 +151,7 @@ export interface ISelectGroupOneProps {
 }
 
 export interface IUpdateUserInfoInput {
+  userId: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;

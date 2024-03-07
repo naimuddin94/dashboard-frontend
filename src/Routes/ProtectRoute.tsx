@@ -30,7 +30,7 @@ const ProtectRoute = ({ children, protectedBy }: IProtectRouteProps) => {
   if (protectedBy.includes(role)) {
     return children;
   }
-  return <Navigate to="/dashboard"></Navigate>;
+  return <Navigate to="/"></Navigate>;
 };
 
 export default ProtectRoute;
