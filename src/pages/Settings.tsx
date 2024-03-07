@@ -1,23 +1,31 @@
 import { useEffect, useState } from 'react';
+import { FaSkype } from 'react-icons/fa';
+import { FaPhone } from 'react-icons/fa6';
+import { RiWhatsappFill } from 'react-icons/ri';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import useAuthInfo from '../hooks/useAuthInfo';
 import defaultUser from '../images/user/default_user.jpg';
 import { axiosBase } from '../hooks/useAxiosSecure';
-import { ICustomer } from '../types/types';
-import { FaPhone } from 'react-icons/fa6';
+import { ICustomer, IUpdateUserInfoInput } from '../types/types';
 
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const Settings = () => {
+  const { register, handleSubmit } = useForm<IUpdateUserInfoInput>();
   const { user, photo, role } = useAuthInfo();
   const [userInfo, setUserInfo] = useState<ICustomer | null>(null);
-
-  let capitalizedRole = role?.charAt(0).toUpperCase() + role?.slice(1);
 
   useEffect(() => {
     axiosBase
       .get(`/${role}s/${user?.email}`)
       .then((res) => setUserInfo(res.data as ICustomer));
   }, [user, role]);
+
+  let capitalizedRole = role?.charAt(0).toUpperCase() + role?.slice(1);
+
+  const onSubmit: SubmitHandler<IUpdateUserInfoInput> = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -33,12 +41,13 @@ const Settings = () => {
                 </h3>
               </div>
               <div className="p-7">
-                <form action="#">
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                    {/* first name field */}
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="fullName"
+                        htmlFor="firstName"
                       >
                         First Name
                       </label>
@@ -71,47 +80,49 @@ const Settings = () => {
                         <input
                           className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                           type="text"
-                          name="firstName"
-                          id="fullName"
+                          {...register('firstName')}
+                          id="firstName"
                           placeholder="Enter full name"
                           defaultValue={userInfo ? userInfo.firstName : ''}
                         />
                       </div>
                     </div>
 
+                    {/* last name field */}
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="phoneNumber"
+                        htmlFor="lastName"
                       >
                         Last Name
                       </label>
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="text"
-                        name="lastName"
-                        id="phoneNumber"
+                        {...register('lastName')}
+                        id="lastName"
                         placeholder="Enter phone number"
                         defaultValue={userInfo ? userInfo.lastName : ''}
                       />
                     </div>
                   </div>
 
+                  {/* phone number field */}
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="emailAddress"
+                      htmlFor="phoneNumber"
                     >
                       Phone Number
                     </label>
                     <div className="relative">
                       <span className="absolute left-4.5 top-4">
-                        <FaPhone/>
+                        <FaPhone />
                       </span>
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                        type="email"
-                        name="phoneNumber"
+                        type="text"
+                        {...register('phoneNumber')}
                         id="phoneNumber"
                         placeholder="880190000000"
                         defaultValue={userInfo ? userInfo.phoneNumber : ''}
@@ -119,6 +130,53 @@ const Settings = () => {
                     </div>
                   </div>
 
+                  {/* whatsapp field */}
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                      htmlFor="whatsapp"
+                    >
+                      Whatsapp Number
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-4.5 top-4">
+                        <RiWhatsappFill size={20} />
+                      </span>
+                      <input
+                        className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        {...register('whatsapp')}
+                        id="whatsapp"
+                        placeholder="880190000000"
+                        defaultValue={userInfo ? userInfo.whatsapp : ''}
+                      />
+                    </div>
+                  </div>
+
+                  {/* skype field */}
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                      htmlFor="skype"
+                    >
+                      Skype
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-4.5 top-4">
+                        <FaSkype size={20} />
+                      </span>
+                      <input
+                        className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        {...register('skype')}
+                        id="skype"
+                        placeholder="880190000000"
+                        defaultValue={userInfo ? userInfo.skype : ''}
+                      />
+                    </div>
+                  </div>
+
+                  {/* email field */}
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
@@ -163,6 +221,7 @@ const Settings = () => {
                     </div>
                   </div>
 
+                  {/* role field */}
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
@@ -196,10 +255,11 @@ const Settings = () => {
                     </div>
                   </div>
 
+                  {/* bio field */}
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="Username"
+                      htmlFor="bio"
                     >
                       BIO
                     </label>
@@ -237,7 +297,7 @@ const Settings = () => {
 
                       <textarea
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                        name="bio"
+                        {...register('bio')}
                         id="bio"
                         rows={6}
                         placeholder="Write your bio here"
@@ -247,12 +307,6 @@ const Settings = () => {
                   </div>
 
                   <div className="flex justify-end gap-4.5">
-                    <button
-                      className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
-                    >
-                      Cancel
-                    </button>
                     <button
                       className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
                       type="submit"

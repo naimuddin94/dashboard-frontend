@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: '/dashboard',
+        path: '/',
         element: (
           <ProtectRoute protectedBy={['admin', 'leader', 'customer']}>
             <ECommerce />

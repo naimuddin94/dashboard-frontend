@@ -149,3 +149,12 @@ export interface ISelectGroupOneProps {
   name: string;
   defaultValue?: string;
 }
+
+export interface IUpdateUserInfoInput {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  whatsapp: string;
+  skype: string;
+  bio: string;
+}
